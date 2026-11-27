@@ -1,0 +1,600 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Feeder Control Room 2D</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 16%22%3E%3Cpath d=%22M9 1 3 9h4l-1 6 6-8H8z%22 fill=%22%231f6fd1%22/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@600;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: the same control room as the 3D page, drawn flat so it works offline and prints well:
+   a header with the current run and actions, four status tiles, the feeder and running-cost
+   charts beside a board of every home, and a sticky timeline. Set-up and the home detail open
+   in a side drawer; comparison and bills open as dialogs. Light and dark themes. */
+:root {
+  --bg: #edf1f4; --panel: #ffffff; --panel-2: #f6f8fa; --ink: #142230; --muted: #5b6b7a; --line: #d3dbe2; --grid: #e6ebef;
+  --central: #1f6fd1; --local: #c27400; --rule: #7a4ec2; --stale: #c62f2f; --import: #1f6fd1; --export: #c98a00;
+  --good: #1d8752; --bad: #c62f2f; --offline: rgba(194,116,0,0.13); --changed: rgba(201,138,0,0.14); --scrim: rgba(10,20,30,0.45);
+  --font-display: "Barlow Condensed", "Arial Narrow", "Roboto Condensed", sans-serif;
+  --font-body: "Barlow", "Segoe UI", system-ui, sans-serif;
+  --font-data: "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #0c131a; --panel: #141f2a; --panel-2: #101923; --ink: #e2e9ef; --muted: #8ea0b1; --line: #253443; --grid: #1c2936;
+  --central: #4d9bf0; --local: #f0a33a; --rule: #a886e8; --stale: #f06a6a; --import: #4d9bf0; --export: #f0c03a;
+  --good: #4cc38a; --bad: #f06a6a; --offline: rgba(240,163,58,0.14); --changed: rgba(240,192,58,0.14); --scrim: rgba(0,0,0,0.55); color-scheme: dark; } }
+:root[data-theme="dark"] {
+  --bg: #0c131a; --panel: #141f2a; --panel-2: #101923; --ink: #e2e9ef; --muted: #8ea0b1; --line: #253443; --grid: #1c2936;
+  --central: #4d9bf0; --local: #f0a33a; --rule: #a886e8; --stale: #f06a6a; --import: #4d9bf0; --export: #f0c03a;
+  --good: #4cc38a; --bad: #f06a6a; --offline: rgba(240,163,58,0.14); --changed: rgba(240,192,58,0.14); --scrim: rgba(0,0,0,0.55); color-scheme: dark; }
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body { background: var(--bg); color: var(--ink); font: 15px/1.45 var(--font-body);
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 0 0; }
+[hidden] { display: none !important; }
+.wrap { max-width: 1360px; margin: 0 auto; display: grid; gap: 14px; padding-block: 14px 110px; }
+h1, h2, h3 { font-family: var(--font-display); margin: 0; letter-spacing: .02em; text-wrap: balance; }
+h1 { font-size: 26px; } h2 { font-size: 16px; text-transform: uppercase; letter-spacing: .07em; color: var(--muted); }
+.num { font-family: var(--font-data); font-variant-numeric: tabular-nums; }
+.panel { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 14px 16px; min-width: 0; }
+button, select, input { font: 500 14px var(--font-body); color: var(--ink); background: var(--panel); border: 1px solid var(--line); border-radius: 5px; padding: 6px 10px; }
+button { cursor: pointer; }
+button:hover:not(:disabled), select:hover:not(:disabled), input:hover:not(:disabled) { border-color: var(--muted); }
+button:disabled, input:disabled, select:disabled { opacity: .5; cursor: not-allowed; }
+:is(button, select, input, a):focus-visible { outline: 2px solid var(--central); outline-offset: 2px; }
+.btn-primary { background: var(--central); border-color: var(--central); color: #fff; font-weight: 600; }
+.btn-ghost { background: transparent; border-color: transparent; color: var(--muted); }
+a { color: var(--central); }
+.label { font-size: 11px; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); }
+.pill { display: inline-block; font: 600 11px/1 var(--font-data); letter-spacing: .05em; padding: 3px 7px; border-radius: 99px; text-transform: uppercase; border: 1px solid currentColor; }
+.pill.ok { color: var(--good); } .pill.warn { color: var(--local); } .pill.crit { color: var(--bad); }
+.note { color: var(--muted); font-size: 13px; margin: 0; max-width: 78ch; }
+
+header.top { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; }
+.badge { font: 600 11px/1 var(--font-data); letter-spacing: .1em; padding: 5px 8px; border-radius: 3px; border: 1px solid currentColor; text-transform: uppercase; }
+.badge.live { color: var(--good); } .badge.replay { color: var(--muted); }
+#runChip { color: var(--muted); font-size: 14px; flex: 1 1 280px; min-width: 0; }
+.actions { display: flex; gap: 6px; flex-wrap: wrap; }
+#alert { border-left: 4px solid var(--local); color: var(--local); font-weight: 500; }
+#note { font-size: 13px; color: var(--muted); }
+
+.kpis { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+.kpi { display: grid; gap: 3px; align-content: start; }
+.kpi .value { font: 600 26px/1.1 var(--font-data); font-variant-numeric: tabular-nums; }
+.kpi .sub { font-size: 13px; color: var(--muted); }
+.meter { height: 5px; border-radius: 3px; background: var(--grid); overflow: hidden; margin-top: 2px; }
+.meter > span { display: block; height: 100%; background: var(--import); }
+
+.main { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); gap: 14px; }
+.charts { display: grid; gap: 14px; align-content: start; }
+.chart-head { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; flex-wrap: wrap; margin-bottom: 6px; }
+.legend { display: flex; flex-wrap: wrap; gap: 4px 14px; font-size: 12.5px; color: var(--muted); }
+.legend i { display: inline-block; width: 14px; height: 3px; vertical-align: middle; margin-right: 5px; border-radius: 2px; }
+.legend i.box { height: 10px; width: 10px; }
+canvas.chart { width: 100%; display: block; }
+
+.board { display: grid; grid-template-columns: repeat(auto-fill, minmax(92px, 1fr)); gap: 7px; margin-top: 8px; }
+.hh { border: 1px solid var(--line); border-left: 4px solid var(--central); border-radius: 5px; padding: 6px 7px; display: grid; gap: 3px; background: var(--panel); cursor: pointer; text-align: left; font: inherit; color: inherit; min-width: 0; }
+.hh:hover { border-color: var(--muted); }
+.hh[aria-pressed="true"] { outline: 2px solid var(--central); outline-offset: 1px; }
+.hh[data-mode="1"] { border-left-color: var(--local); background: var(--offline); }
+.hh[data-mode="2"] { border-left-color: var(--rule); }
+.hh[data-mode="3"] { border-left-color: var(--stale); }
+.hh .top { display: flex; justify-content: space-between; align-items: baseline; gap: 4px; }
+.hh .id { font: 700 14px/1 var(--font-display); }
+.hh .net { font: 500 11px/1 var(--font-data); white-space: nowrap; }
+.hh .net.exp { color: var(--good); }
+.row { display: grid; grid-template-columns: 26px minmax(0, 1fr); align-items: center; gap: 4px; font-size: 10px; color: var(--muted); }
+.bar { height: 5px; background: var(--grid); border-radius: 3px; overflow: hidden; }
+.bar > span { display: block; height: 100%; }
+.bar.pv > span { background: var(--export); } .bar.bat > span { background: var(--good); } .bar.ev > span { background: var(--import); }
+.bar.away { opacity: .35; }
+
+/* timeline */
+#timeline { position: fixed; left: max(16px, env(safe-area-inset-left, 0px)); right: max(16px, env(safe-area-inset-right, 0px)); bottom: calc(env(safe-area-inset-bottom, 0px) + 12px);
+  max-width: 1360px; margin: 0 auto; display: grid; grid-template-columns: auto auto minmax(0, 1fr) auto; gap: 14px; align-items: center; z-index: 5; box-shadow: 0 6px 24px rgba(0,0,0,.18); }
+#play { min-width: 84px; }
+#clock { font: 600 28px/1 var(--font-data); font-variant-numeric: tabular-nums; min-width: 88px; }
+#scrub { width: 100%; accent-color: var(--central); }
+.tl-right { display: flex; gap: 6px; align-items: center; }
+#cut { border-color: var(--local); color: var(--local); }
+#cut[aria-pressed="true"] { background: var(--local); color: #fff; }
+
+/* drawer + dialogs */
+.drawer { position: fixed; z-index: 10; top: 72px; right: max(16px, env(safe-area-inset-right, 0px)); bottom: 90px; width: min(400px, calc(100% - 32px));
+  display: grid; grid-template-rows: auto auto minmax(0, 1fr) auto; padding: 0; box-shadow: 0 10px 40px rgba(0,0,0,.25); }
+.drawer header { display: flex; align-items: center; justify-content: space-between; padding: 12px 14px 8px; gap: 8px; }
+.tabs { display: flex; gap: 2px; padding: 0 14px; border-bottom: 1px solid var(--line); }
+.tabs button { border: 0; border-bottom: 2px solid transparent; border-radius: 0; background: none; padding: 8px 10px; color: var(--muted); }
+.tabs button[aria-selected="true"] { color: var(--ink); border-bottom-color: var(--central); }
+.pane { overflow: auto; padding: 14px; display: grid; gap: 16px; align-content: start; }
+.pane h3 { font: 600 12px var(--font-body); text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin-bottom: 8px; }
+.drawer footer { padding: 12px 14px; border-top: 1px solid var(--line); display: flex; gap: 8px; align-items: center; }
+.drawer footer .msg { font-size: 12.5px; color: var(--muted); margin-right: auto; }
+.choice { display: grid; gap: 6px; }
+.opt { display: grid; grid-template-columns: 18px minmax(0, 1fr); gap: 2px 8px; padding: 8px 10px; border: 1px solid var(--line); border-radius: 6px; cursor: pointer; }
+.opt:has(input:checked) { border-color: var(--central); background: var(--panel-2); }
+.opt input { margin: 3px 0 0; accent-color: var(--central); }
+.opt .t { font-weight: 500; } .opt .d { grid-column: 2; font-size: 12.5px; color: var(--muted); }
+.opt .tag { font: 600 10px var(--font-data); color: var(--central); margin-left: 6px; }
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.field { display: grid; gap: 4px; min-width: 0; font-size: 13px; }
+.field input, .field select { width: 100%; }
+.field small { color: var(--muted); font-size: 11.5px; }
+.range-row { display: grid; grid-template-columns: minmax(0, 1fr) 66px; gap: 10px; align-items: center; }
+input[type=range] { accent-color: var(--central); padding: 0; border: 0; background: none; }
+.callout { font-size: 13px; color: var(--muted); border-left: 3px solid var(--local); padding: 6px 10px; background: var(--panel-2); margin: 0; }
+.callout.info { border-left-color: var(--central); }
+.tablebox { max-height: 300px; overflow: auto; border: 1px solid var(--line); border-radius: 6px; }
+.hometable { width: 100%; border-collapse: collapse; font-size: 13px; }
+.hometable th { font: 600 10.5px var(--font-body); text-transform: uppercase; letter-spacing: .07em; color: var(--muted); text-align: left; padding: 6px 4px; position: sticky; top: 0; background: var(--panel); }
+.hometable td { padding: 2px 3px; border-top: 1px solid var(--line); }
+.hometable td:first-child { font-family: var(--font-data); color: var(--muted); padding-left: 6px; }
+.hometable input, .hometable select { width: 100%; padding: 4px 5px; font: 500 12.5px var(--font-data); }
+.hometable .changed { background: var(--changed); }
+.bulk { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; align-items: end; }
+.irow { display: grid; grid-template-columns: 110px minmax(0, 1fr) 62px; gap: 8px; align-items: center; font-size: 13px; }
+.irow .k { color: var(--muted); } .irow .v { text-align: right; font-family: var(--font-data); }
+.gauge { height: 6px; border-radius: 3px; background: var(--grid); overflow: hidden; } .gauge > span { display: block; height: 100%; }
+#spark { width: 100%; height: 76px; display: block; }
+.modal { position: fixed; inset: 0; z-index: 20; display: grid; place-items: center; background: var(--scrim); padding: 16px; }
+.modal > .panel { width: min(920px, 100%); max-height: calc(100% - 32px); display: grid; grid-template-rows: auto auto minmax(0, 1fr) auto; gap: 10px; }
+.modal header { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+.scroll { overflow: auto; min-height: 0; }
+table.data { border-collapse: collapse; width: 100%; font-size: 13.5px; }
+table.data th, table.data td { padding: 7px 8px; text-align: right; border-bottom: 1px solid var(--line); white-space: nowrap; }
+table.data th { font: 600 11px var(--font-body); text-transform: uppercase; letter-spacing: .07em; color: var(--muted); position: sticky; top: 0; background: var(--panel); }
+table.data th:first-child, table.data td:first-child, table.data .l { text-align: left; }
+table.data td.saving { color: var(--good); }
+table.data tr.best td { background: var(--panel-2); }
+.ctrlname { white-space: normal !important; min-width: 220px; font-weight: 500; }
+.ctrlname small { display: block; color: var(--muted); font-weight: 400; font-size: 12px; max-width: 340px; }
+.hbar { height: 8px; border-radius: 4px; background: var(--grid); flex: 1; overflow: hidden; } .hbar > span { display: block; height: 100%; background: var(--central); }
+.spinner { width: 14px; height: 14px; border: 2px solid var(--line); border-top-color: var(--central); border-radius: 50%; animation: spin .8s linear infinite; display: inline-block; vertical-align: -2px; margin-right: 8px; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+@media (max-width: 1000px) { .main { grid-template-columns: minmax(0, 1fr); } .kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 620px) { .kpi .value { font-size: 21px; } #timeline { grid-template-columns: auto auto minmax(0, 1fr); gap: 10px; padding: 8px 10px; } .tl-right { display: none; }
+  #clock { font-size: 21px; min-width: 60px; } .bulk { grid-template-columns: 1fr 1fr; } .board { grid-template-columns: repeat(auto-fill, minmax(72px, 1fr)); } .hh .net { display: none; } }
+@media (prefers-reduced-motion: reduce) { .spinner { animation-duration: 3s; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <h1>Feeder Control Room</h1><span id="modeBadge" class="badge replay">Replay</span>
+    <span id="runChip"></span>
+    <div class="actions"><button id="openSetup">Set up</button><button id="openCompare">Compare</button><button id="openBills">Bills</button>
+      <a href="index.html" style="align-self:center;padding:0 6px">3D view</a></div>
+  </header>
+  <div id="alert" class="panel" role="status" hidden></div>
+  <div id="note" class="panel" hidden></div>
+
+  <section class="kpis" aria-label="Status now">
+    <div class="panel kpi"><span class="label">Saving vs grid-only</span><span id="kSave" class="value">–</span><span id="kSaveSub" class="sub"></span></div>
+    <div class="panel kpi"><span class="label">Feeder load</span><span id="kFeeder" class="value">–</span><div class="meter"><span id="kFeederBar" style="width:0"></span></div><span id="kFeederSub" class="sub"></span></div>
+    <div class="panel kpi"><span class="label">Control</span><span id="kCtrl" class="value">–</span><span id="kCtrlSub" class="sub"></span></div>
+    <div class="panel kpi"><span class="label">Demand served</span><span id="kUns" class="value">–</span><span id="kUnsSub" class="sub"></span></div>
+  </section>
+
+  <section class="main">
+    <div class="charts">
+      <div class="panel"><div class="chart-head"><h2>Feeder load</h2><div class="legend"><span><i style="background:var(--import)"></i>net community demand</span>
+        <span><i style="background:var(--bad)"></i>cable limit</span><span><i class="box" style="background:var(--offline);outline:1px solid var(--local)"></i>operator link down</span></div></div>
+        <canvas id="cFeeder" class="chart" height="240" aria-label="Net community demand on the feeder over the day"></canvas></div>
+      <div class="panel"><div class="chart-head"><h2>Running cost</h2><div class="legend"><span><i style="background:var(--central)"></i>this controller</span>
+        <span><i style="background:var(--muted)"></i>grid-only (no coordination)</span></div></div>
+        <canvas id="cCost" class="chart" height="200" aria-label="Cumulative community cost over the day"></canvas></div>
+    </div>
+    <div class="panel"><div class="chart-head"><h2>Homes</h2><span id="boardSub" class="note"></span></div>
+      <div id="board" class="board" role="group" aria-label="Every home; select one for its detail"></div>
+      <div class="legend" style="margin-top:10px"><span><i class="box" style="background:var(--central)"></i>central MAT</span><span><i class="box" style="background:var(--local)"></i>local fallback</span>
+        <span><i class="box" style="background:var(--rule)"></i>rule controller</span><span><i style="background:var(--export)"></i>solar now</span><span><i style="background:var(--good)"></i>battery</span><span><i style="background:var(--import)"></i>car (faded = away)</span></div>
+    </div>
+  </section>
+  <p class="note">Simulation of a community built from a 250-home dataset (one day, 15-minute steps). Not live metering data. What everything means: docs/EXPLAINER.md.</p>
+</div>
+
+<div id="timeline" class="panel">
+  <button id="play" class="btn-primary">Play</button>
+  <span id="clock">00:00</span>
+  <input id="scrub" type="range" min="0" max="96" step="0.01" value="0" aria-label="Time of day">
+  <div class="tl-right"><button id="cut" hidden aria-pressed="false">Cut link</button><label for="speed" class="label">Speed</label>
+    <select id="speed"><option value="0.5">½×</option><option value="1" selected>1×</option><option value="2">2×</option><option value="4">4×</option><option value="8">8×</option></select></div>
+</div>
+
+<aside id="setup" class="drawer panel" hidden aria-label="Set up a simulation">
+  <header><h2>Set up</h2><button class="btn-ghost" id="closeSetup">Close</button></header>
+  <div class="tabs" role="tablist"><button role="tab" id="tabRun" aria-selected="true">Run</button><button role="tab" id="tabCommunity" aria-selected="false">Community</button></div>
+  <div id="paneRun" class="pane" role="tabpanel">
+    <section><h3>Controller</h3><div id="ctrlList" class="choice"></div></section>
+    <section><h3>Communication scenario</h3><div id="scenList" class="choice"></div>
+      <div id="customOutage" class="grid2" style="margin-top:10px" hidden>
+        <label class="field">Who is cut off<select id="coKind"><option value="window">Every home</option><option value="homes">Some homes</option></select></label>
+        <label class="field" id="coShareWrap">Share of homes<select id="coShare"></select></label>
+        <label class="field">From<select id="coStart"></select></label><label class="field">Until<select id="coEnd"></select></label>
+      </div></section>
+  </div>
+  <div id="paneCommunity" class="pane" role="tabpanel" hidden>
+    <p id="replayOnly" class="callout info" hidden>You are viewing recorded days of the 25-home study community. To build your own community, run <code>python platform/server.py</code> and open <code>http://localhost:8765/classic.html</code>.</p>
+    <section><h3>Size and feeder</h3>
+      <div class="field"><span>Number of homes</span><div class="range-row"><input type="range" id="nHomes" min="4" max="60" step="1" value="25" aria-label="Number of homes"><input id="nHomesNum" type="number" min="4" max="60" value="25" aria-label="Number of homes, as a number"></div></div>
+      <div class="grid2" style="margin-top:10px">
+        <label class="field">Draw number<input id="drawSeed" type="number" min="0" max="9999" value="0"><small>picks which homes come from the dataset</small></label>
+        <div class="field" style="align-content:end"><button id="drawHomes">Draw homes</button><small>replaces the table below</small></div>
+        <label class="field">Import limit per home, kW<input id="feederKw" type="number" min="4" max="17" step="0.5" value="8"><small>feeder limit = this × homes</small></label>
+        <label class="field">Export limit per home, kW<input id="exportKw" type="number" min="2" max="17" step="0.5" value="5"></label>
+      </div></section>
+    <section><h3>Set for every home</h3><div class="bulk">
+      <label class="field">Solar kW<input id="bPv" type="number" min="0" max="15" step="0.5" placeholder="–"></label>
+      <label class="field">Battery kWh<input id="bBat" type="number" min="0" max="30" step="0.5" placeholder="–"></label>
+      <label class="field">Demand ×<input id="bLoad" type="number" min="0.25" max="3" step="0.05" placeholder="–"></label>
+      <button id="bApply">Apply</button></div></section>
+    <section><h3>Homes <span id="changedCount" class="pill warn" hidden></span></h3>
+      <div class="tablebox"><table class="hometable"><thead><tr><th>Home</th><th>Solar kW</th><th>Battery kWh</th><th>Cars</th><th>Demand ×</th></tr></thead><tbody id="homeRows"></tbody></table></div>
+      <div style="margin-top:8px"><button id="resetHomes">Reset to dataset values</button></div>
+      <p class="note" style="margin-top:8px">Cars can be removed, not added: each car keeps its recorded driving pattern. A home given solar it did not have gets the dataset's average solar shape.</p></section>
+    <p class="callout">The controllers were trained on the 25-home study community. On a custom community they run unchanged and the safety layer still holds, but costs are a generalisation test.</p>
+  </div>
+  <footer><span class="msg" id="setupMsg"></span><button id="runDay" class="btn-primary">Run day</button></footer>
+</aside>
+
+<aside id="inspect" class="drawer panel" hidden aria-live="polite" style="bottom:auto">
+  <header><div><h2 id="iTitle">Home 1</h2><div id="iMeta" class="note"></div></div><button class="btn-ghost" id="iClose">Close</button></header>
+  <div></div>
+  <div class="pane" style="gap:10px">
+    <div id="iMode"></div>
+    <div class="irow"><span class="k">Net power</span><span id="iNetTxt" class="note"></span><span id="iNet" class="v"></span></div>
+    <div class="irow"><span class="k">Solar now</span><div class="gauge"><span id="iPvBar" style="background:var(--export)"></span></div><span id="iPv" class="v"></span></div>
+    <div class="irow" id="iBatRow"><span class="k">Battery</span><div class="gauge"><span id="iBatBar" style="background:var(--good)"></span></div><span id="iBat" class="v"></span></div>
+    <div class="irow" id="iEv1Row"><span class="k" id="iEv1k">Car 1</span><div class="gauge"><span id="iEv1Bar" style="background:var(--import)"></span></div><span id="iEv1" class="v"></span></div>
+    <div class="irow" id="iEv2Row"><span class="k" id="iEv2k">Car 2</span><div class="gauge"><span id="iEv2Bar" style="background:var(--import)"></span></div><span id="iEv2" class="v"></span></div>
+    <div><span class="label">Net power over the day</span><canvas id="spark" aria-label="This home's net power over the day"></canvas></div>
+    <div id="iBill" class="note" hidden></div>
+  </div><div></div>
+</aside>
+
+<div class="modal" id="compareWrap" hidden><div class="panel" role="dialog" aria-modal="true" aria-labelledby="cmpTitle">
+  <header><h2 id="cmpTitle">Compare controllers</h2><button class="btn-ghost" id="cmpClose">Close</button></header>
+  <p class="note" id="cmpSub"></p><div class="scroll" id="cmpBody"></div>
+  <p class="note">Cost is battery-neutral: battery energy used up during the day is bought back at the day's cheapest tariff. The bar is the saving against every home buying from the grid on its own.</p>
+</div></div>
+<div class="modal" id="billsWrap" hidden><div class="panel" role="dialog" aria-modal="true" aria-labelledby="billsTitle">
+  <header><h2 id="billsTitle">End-of-day bills</h2><span id="billsBadge"></span><button class="btn-ghost" id="billsClose">Close</button></header>
+  <p class="note">Savings are shared by each home's share of the optimal community plan (a core-stable allocation), so no home pays more than it would on the grid alone whenever the community saves.</p>
+  <div class="scroll"><table class="data"><thead><tr><th>Home</th><th>Solar</th><th>Battery</th><th>Grid-only</th><th>Settled</th><th>Saving</th></tr></thead><tbody id="ledger"></tbody></table></div><span></span>
+</div></div>
+
+<script src="data/traces.js"></script>
+<script>
+(() => {
+"use strict";
+const $ = (id) => document.getElementById(id);
+const eur = (v) => (v < 0 ? "−€" : "€") + Math.abs(v).toFixed(2);
+const pad2 = (n) => String(n).padStart(2, "0");
+const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+const stepClock = (s) => (s >= 96 ? "24:00" : `${pad2(Math.floor(s / 4))}:${pad2((s % 4) * 15)}`);
+const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const css = (n) => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+const MODE_NAME = { 0: "Central control (MAT)", 1: "Local fallback (MAPPO)", 2: "Rule controller", 3: "Holding last setpoint" };
+const MODE_CSS = { 0: "var(--central)", 1: "var(--local)", 2: "var(--rule)", 3: "var(--stale)" };
+const KEYS = ["pv_kw", "battery_kwh", "evs", "load_scale"];
+const RANGE = { pv_kw: [0, 15], battery_kwh: [0, 30], evs: [0, 2], load_scale: [0.25, 3] };
+const S = { server: false, controllers: [], scenarioLabels: {}, households: [], limit: 200, frames: [], summary: null, ft: 0, playing: false, speed: 1,
+  es: null, session: null, cut: false, sel: -1, run: { scen: "normal", ctrl: "hybrid", outage: null },
+  draft: { scen: "normal", ctrl: "hybrid", outage: { kind: "window", start: 68, end: 84, share: 0.3 } }, spec: null, dataset: null };
+window.__S = S;
+
+// ---------------------------------------------------------------- data sources
+async function api(path, body) {
+  const r = await fetch(path, body ? { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body), cache: "no-store" } : { cache: "no-store" });
+  const j = await r.json().catch(() => ({ error: `the server returned ${r.status}` }));
+  if (!r.ok) throw new Error(j.error || `the server returned ${r.status}`); return j;
+}
+async function detectServer() {
+  if (location.protocol === "file:") return null;
+  try { const c = new AbortController(), id = setTimeout(() => c.abort(), 1200); const r = await fetch("/api/health", { signal: c.signal, cache: "no-store" }); clearTimeout(id);
+    if (!r.ok) return null; const j = await r.json(); return j && j.live ? j : null; } catch (e) { return null; }
+}
+function scenarioLabel(scen, o) {
+  if (scen !== "custom") return S.scenarioLabels[scen] || scen;
+  return `${o.kind === "window" ? "Every home" : Math.round(o.share * 100) + "% of homes"} cut off ${stepClock(o.start)}–${stepClock(o.end)}`;
+}
+const ctrlLabel = (k) => (S.controllers.find((c) => c.key === k) || { label: k }).label;
+function setRun(frames, summary, households, limit, scen, ctrl, outage) {
+  stopStream();
+  const rebuild = JSON.stringify(households) !== JSON.stringify(S.households);
+  S.households = households; S.limit = limit; S.frames = frames; S.summary = summary; S.run = { scen, ctrl, outage };
+  if (rebuild) { select(-1); buildBoard(); }
+  $("runChip").textContent = `${scenarioLabel(scen, outage || {})} · ${ctrlLabel(ctrl)} · ${households.length} homes · ${Math.round(limit)} kW feeder`;
+  S.ft = 0; refresh.last = -1; refresh(true);
+}
+function stopStream() { if (S.es) { S.es.close(); S.es = null; } S.session = null; S.cut = false; $("cut").hidden = true; $("cut").setAttribute("aria-pressed", "false"); $("cut").textContent = "Cut link"; }
+function playRecorded(scen, ctrl) {
+  const run = window.TRACES.scenarios[scen].runs[ctrl];
+  setRun(run.frames, run.summary, window.TRACES.meta.households, window.TRACES.meta.feeder_limit_kw, scen, ctrl, null); $("note").hidden = true; setPlay(true);
+}
+async function playLive(scen, ctrl, outage) {
+  const res = await api("/api/session", { spec: S.spec, scenario: scen === "custom" ? outage : scen, controller: ctrl });
+  setRun([], null, res.households, res.feeder_limit_kw, scen, ctrl, outage);
+  $("note").hidden = !res.note; $("note").textContent = res.note || ""; S.session = res.session;
+  S.es = new EventSource(`/api/stream?session=${res.session}&speed=${S.speed * 2}`);
+  S.es.addEventListener("frame", (e) => { S.frames.push(JSON.parse(e.data)); });
+  S.es.addEventListener("summary", (e) => { S.summary = JSON.parse(e.data); if (S.es) S.es.close(); S.es = null; $("cut").hidden = true; setPlay(false); refresh(true); });
+  S.es.onerror = () => { if (S.es && S.es.readyState === 2) { S.es = null; $("cut").hidden = true; setPlay(false); } };
+  $("cut").hidden = ctrl === "rule" || ctrl === "mappo"; setPlay(true);
+}
+
+// ---------------------------------------------------------------- rendering
+function setPlay(on) { S.playing = on; $("play").textContent = S.es ? "Stop" : on ? "Pause" : (S.frames.length && S.ft >= S.frames.length - 0.05 ? "Replay" : "Play"); }
+const curIndex = () => clamp(Math.floor(S.ft), 0, Math.max(0, S.frames.length - 1));
+const effMode = (m) => (S.run.ctrl === "rule" ? 2 : m < 0 ? 0 : m);
+const linked = () => S.run.ctrl !== "rule" && S.run.ctrl !== "mappo";
+function refresh(force) {
+  const i = curIndex(), f = S.frames[i], h = S.ft / 4;
+  $("clock").textContent = f ? `${pad2(Math.floor(h) % 24)}:${pad2(Math.floor((h % 1) * 60))}` : "00:00";
+  if (document.activeElement !== $("scrub")) $("scrub").value = S.ft;
+  $("scrub").disabled = !!S.es; $("scrub").setAttribute("aria-valuetext", f ? f.clock : "00:00");
+  if (!force && refresh.last === i && refresh.n === S.frames.length) return;
+  refresh.last = i; refresh.n = S.frames.length;
+  drawFeeder(); drawCost(); renderBoard(f);
+  if (!f) { ["kSave", "kFeeder", "kCtrl", "kUns"].forEach((k) => ($(k).textContent = "–")); ["kSaveSub", "kFeederSub", "kCtrlSub", "kUnsSub"].forEach((k) => ($(k).textContent = "")); $("alert").hidden = true; return; }
+  const save = f.grid_only - f.cost;
+  $("kSave").textContent = eur(save);
+  $("kSaveSub").textContent = save >= 0 ? `${(100 * save / Math.max(f.grid_only, 1e-6)).toFixed(1)}% below grid-only so far` : "above grid-only for now: storage bought cheap power early";
+  const pct = clamp(f.feeder_kw / f.limit_kw, -1, 1.2);
+  $("kFeeder").textContent = `${f.feeder_kw < 0 ? "−" : ""}${Math.abs(f.feeder_kw).toFixed(0)} kW`;
+  $("kFeederBar").style.width = `${Math.min(1, Math.abs(pct)) * 100}%`; $("kFeederBar").style.background = f.feeder_kw < 0 ? "var(--export)" : pct > 0.9 ? "var(--bad)" : "var(--import)";
+  $("kFeederSub").textContent = f.feeder_kw < 0 ? `exporting · €${f.price.toFixed(3)}/kWh tariff` : `${(pct * 100).toFixed(0)}% of ${Math.round(f.limit_kw)} kW · €${f.price.toFixed(3)}/kWh`;
+  const n = f.hh.length, modes = f.hh.map((d) => effMode(d[0])), central = modes.filter((m) => m === 0).length;
+  if (S.run.ctrl === "rule") { $("kCtrl").textContent = "Rule"; $("kCtrlSub").textContent = "each home follows the tariff rule"; }
+  else if (S.run.ctrl === "mappo") { $("kCtrl").textContent = "Local"; $("kCtrlSub").textContent = "every home runs its own MAPPO policy"; }
+  else if (central === n) { $("kCtrl").textContent = "Central"; $("kCtrlSub").innerHTML = `<span class="pill ok">link up · ${n}/${n} homes</span>`; }
+  else { const top = [1, 2, 3].map((m) => [m, modes.filter((x) => x === m).length]).sort((a, b) => b[1] - a[1])[0];
+    $("kCtrl").textContent = central ? "Mixed" : "Fallback"; $("kCtrlSub").innerHTML = `<span class="pill warn">${n - central}/${n} on ${({ 1: "MAPPO", 2: "rule", 3: "last setpoint" })[top[0]]}</span>`; }
+  $("kUns").textContent = f.unserved < 1e-3 ? "100%" : `${f.unserved.toFixed(2)} kWh short`;
+  $("kUnsSub").innerHTML = f.unserved < 1e-3 ? '<span class="pill ok">no load shed</span>' : '<span class="pill crit">load not served</span>';
+  const off = Math.round((1 - f.online) * n), show = linked() && off > 0;
+  $("alert").hidden = !show;
+  if (show) $("alert").textContent = (S.cut ? "Link cut by you. " : `Operator cannot reach ${off} of ${n} homes. `) +
+    ({ hybrid: `Every home now runs its local MAPPO policy; cut-off homes stay under ${+(S.limit / n).toFixed(1)} kW.`, mat_mixed: "Cut-off homes run MAPPO; MAT keeps the others.", mat_rule: "Cut-off homes run the rule controller.", mat_stale: "Cut-off homes repeat their last instruction." }[S.run.ctrl] || "");
+  if (!$("inspect").hidden) updateInspect();
+}
+function setupCanvas(c) { const dpr = window.devicePixelRatio || 1, w = c.clientWidth, h = Number(c.getAttribute("height"));
+  c.width = Math.round(w * dpr); c.height = Math.round(h * dpr); c.style.height = h + "px"; const g = c.getContext("2d"); g.setTransform(dpr, 0, 0, dpr, 0, 0); return { g, w, h }; }
+function axes(g, w, h, pad, y0, y1, ticks, fmt) {
+  g.font = `11px ${css("--font-data")}`; g.fillStyle = css("--muted"); g.strokeStyle = css("--grid"); g.lineWidth = 1;
+  const Y = (v) => pad.t + (h - pad.t - pad.b) * (1 - (v - y0) / (y1 - y0)), X = (t) => pad.l + (w - pad.l - pad.r) * (t / 96);
+  g.textAlign = "right"; g.textBaseline = "middle";
+  ticks.forEach((v) => { g.beginPath(); g.moveTo(pad.l, Y(v)); g.lineTo(w - pad.r, Y(v)); g.stroke(); g.fillText(fmt(v), pad.l - 6, Y(v)); });
+  g.textBaseline = "top"; [0, 24, 48, 72, 96].forEach((t) => { g.textAlign = t === 0 ? "left" : t === 96 ? "right" : "center"; g.fillText(`${pad2(t / 4)}:00`, X(t), h - pad.b + 6); });
+  return { X, Y };
+}
+function niceTicks(lo, hi, n = 5) { const raw = (hi - lo) / n, p = Math.pow(10, Math.floor(Math.log10(raw))), step = [1, 2, 2.5, 5, 10].map((m) => m * p).find((s) => s >= raw);
+  const out = []; for (let v = Math.ceil(lo / step) * step; v <= hi + 1e-9; v += step) out.push(+v.toFixed(6)); return out; }
+function line(g, pts, X, Y, color, width, dash) { if (!pts.length) return; g.strokeStyle = color; g.lineWidth = width; g.setLineDash(dash || []); g.beginPath();
+  pts.forEach(([t, v], k) => (k ? g.lineTo(X(t), Y(v)) : g.moveTo(X(t), Y(v)))); g.stroke(); g.setLineDash([]); }
+function drawFeeder() {
+  const { g, w, h } = setupCanvas($("cFeeder")), pad = { l: 46, r: 10, t: 10, b: 24 };
+  const lim = S.limit, exp = -lim * 5 / 8, fr = S.frames.slice(0, curIndex() + 1);
+  const hi = Math.max(lim * 1.12, ...fr.map((f) => f.feeder_kw)), lo = Math.min(exp * 1.15, ...fr.map((f) => f.feeder_kw));
+  const { X, Y } = axes(g, w, h, pad, lo, hi, niceTicks(lo, hi), (v) => `${v}`);
+  if (linked()) { g.fillStyle = css("--offline"); fr.forEach((f) => { if (f.online < 1) g.fillRect(X(f.t), pad.t, (w - pad.l - pad.r) / 96 + 0.5, h - pad.t - pad.b); }); }
+  line(g, [[0, lim], [96, lim]], X, Y, css("--bad"), 1.5, [6, 4]); line(g, [[0, exp], [96, exp]], X, Y, css("--bad"), 1, [2, 4]);
+  if (fr.length) { g.globalAlpha = 0.12; g.fillStyle = css("--import"); g.beginPath(); g.moveTo(X(fr[0].t + 0.5), Y(0)); fr.forEach((f) => g.lineTo(X(f.t + 0.5), Y(f.feeder_kw))); g.lineTo(X(fr[fr.length - 1].t + 0.5), Y(0)); g.closePath(); g.fill(); g.globalAlpha = 1;
+    line(g, fr.map((f) => [f.t + 0.5, f.feeder_kw]), X, Y, css("--import"), 2); }
+  g.fillStyle = css("--muted"); g.textAlign = "left"; g.textBaseline = "top"; g.fillText("kW", 4, 0);
+}
+function drawCost() {
+  const { g, w, h } = setupCanvas($("cCost")), pad = { l: 52, r: 10, t: 10, b: 24 }, fr = S.frames.slice(0, curIndex() + 1);
+  const hi = Math.max(10, ...S.frames.map((f) => Math.max(f.grid_only, f.cost))) * 1.05, lo = Math.min(0, ...S.frames.map((f) => f.cost));
+  const { X, Y } = axes(g, w, h, pad, lo, hi, niceTicks(lo, hi), (v) => `€${v}`);
+  line(g, fr.map((f) => [f.t + 1, f.grid_only]), X, Y, css("--muted"), 1.5, [5, 4]);
+  line(g, fr.map((f) => [f.t + 1, f.cost]), X, Y, S.run.ctrl === "rule" ? css("--rule") : css("--central"), 2.5);
+}
+function buildBoard() {
+  $("board").innerHTML = S.households.map((h, i) => `<button class="hh" data-i="${i}" aria-pressed="false" data-mode="0" aria-label="Home ${h.id}">
+    <span class="top"><span class="id">${h.id}</span><span class="net num"></span></span>
+    ${h.pv_kw > 0 ? '<span class="row"><span>PV</span><span class="bar pv"><span></span></span></span>' : '<span class="row"><span>PV</span><span>—</span></span>'}
+    ${h.battery_kwh > 0 ? '<span class="row"><span>BAT</span><span class="bar bat"><span></span></span></span>' : '<span class="row"><span>BAT</span><span>—</span></span>'}
+    ${[0, 1].map((j) => j < h.evs ? `<span class="row"><span>EV${j + 1}</span><span class="bar ev"><span></span></span></span>` : `<span class="row"><span>EV${j + 1}</span><span>—</span></span>`).join("")}</button>`).join("");
+  $("board").querySelectorAll(".hh").forEach((b) => b.addEventListener("click", () => select(+b.dataset.i === S.sel ? -1 : +b.dataset.i)));
+}
+function renderBoard(f) {
+  if (!f) { $("boardSub").textContent = ""; return; }
+  let central = 0;
+  f.hh.forEach((d, i) => {
+    const el = $("board").children[i]; if (!el) return; const info = S.households[i], mode = effMode(d[0]); if (mode === 0) central++;
+    el.dataset.mode = mode; el.title = `Home ${info.id}: ${MODE_NAME[mode]}; ${d[6] >= 0 ? "importing" : "exporting"} ${Math.abs(d[6]).toFixed(1)} kW`;
+    const net = el.querySelector(".net"); net.textContent = `${d[6] >= 0 ? "+" : "−"}${Math.abs(d[6]).toFixed(1)}`; net.classList.toggle("exp", d[6] < 0);
+    const set = (sel, frac, away) => { const b = el.querySelector(sel); if (!b) return; b.firstElementChild.style.width = `${clamp(frac, 0, 1) * 100}%`; b.classList.toggle("away", !!away); };
+    set(".bar.pv", f.pv && info.pv_kw ? f.pv[i] / info.pv_kw : 0); set(".bar.bat", d[1]);
+    const evs = el.querySelectorAll(".bar.ev"); [0, 1].forEach((j) => { if (evs[j]) { evs[j].firstElementChild.style.width = `${clamp(d[2 + j], 0, 1) * 100}%`; evs[j].classList.toggle("away", d[4 + j] !== 1); } });
+  });
+  $("boardSub").textContent = S.run.ctrl === "rule" ? "every home on the rule controller · kW: + import / − export" : `${central} central · ${f.hh.length - central} fallback · kW: + import / − export`;
+}
+
+// ---------------------------------------------------------------- inspector
+function select(i) {
+  S.sel = i; $("board").querySelectorAll(".hh").forEach((b, k) => b.setAttribute("aria-pressed", String(k === i)));
+  $("inspect").hidden = i < 0; if (i >= 0) { closeSetup(); updateInspect(); }
+}
+function updateInspect() {
+  const i = S.sel; if (i < 0 || !S.households[i]) return;
+  const info = S.households[i], f = S.frames[curIndex()];
+  $("iTitle").textContent = "Home " + info.id;
+  $("iMeta").textContent = `${info.pv_kw ? info.pv_kw.toFixed(1) + " kW solar" : "No solar"} · ${info.battery_kwh ? info.battery_kwh.toFixed(1) + " kWh battery" : "no battery"} · ${info.evs} car${info.evs === 1 ? "" : "s"}`;
+  if (!f) return;
+  const d = f.hh[i], prev = S.frames[Math.max(0, curIndex() - 1)].hh[i], mode = effMode(d[0]), net = d[6], pv = f.pv ? f.pv[i] : 0;
+  $("iMode").innerHTML = `<span class="pill" style="color:${MODE_CSS[mode]}">${MODE_NAME[mode]}</span>`;
+  $("iNet").textContent = `${net >= 0 ? "+" : "−"}${Math.abs(net).toFixed(2)}`; $("iNetTxt").textContent = net >= 0.05 ? "importing, kW" : net <= -0.05 ? "exporting, kW" : "balanced, kW";
+  $("iPv").textContent = `${pv.toFixed(1)} kW`; $("iPvBar").style.width = `${info.pv_kw ? clamp(100 * pv / info.pv_kw, 0, 100) : 0}%`;
+  $("iBatRow").hidden = !(info.battery_kwh > 0); if (d[1] >= 0) { $("iBat").textContent = `${Math.round(d[1] * 100)}%`; $("iBatBar").style.width = `${d[1] * 100}%`; }
+  [[2, 4, "1"], [3, 5, "2"]].forEach(([si, hi, n]) => { $("iEv" + n + "Row").hidden = d[si] < 0; if (d[si] < 0) return; const home = d[hi], chg = d[si] > prev[si] + 1e-3;
+    $("iEv" + n).textContent = `${Math.round(d[si] * 100)}%`; $("iEv" + n + "Bar").style.width = `${d[si] * 100}%`; $("iEv" + n + "Bar").style.opacity = home ? 1 : 0.35;
+    $("iEv" + n + "k").textContent = `Car ${n} · ${home ? (chg ? "charging" : "home") : "away"}`; });
+  const c = $("spark"), dpr = window.devicePixelRatio || 1, w = c.clientWidth, hgt = c.clientHeight;
+  if (w) { c.width = w * dpr; c.height = hgt * dpr; const g = c.getContext("2d"); g.setTransform(dpr, 0, 0, dpr, 0, 0);
+    const vals = S.frames.map((fr) => fr.hh[i][6]), m = Math.max(2, ...vals.map(Math.abs)), X = (t) => (t / 96) * w, Y = (v) => hgt / 2 - (v / m) * (hgt / 2 - 8);
+    g.strokeStyle = css("--grid"); g.beginPath(); g.moveTo(0, hgt / 2); g.lineTo(w, hgt / 2); g.stroke();
+    for (let k = 0; k <= curIndex() && k < vals.length; k++) { g.fillStyle = vals[k] >= 0 ? css("--import") : css("--export"); g.fillRect(X(k), Math.min(Y(vals[k]), hgt / 2), Math.max(1, w / 110), Math.abs(Y(vals[k]) - hgt / 2)); }
+    g.fillStyle = css("--muted"); g.font = `10px ${css("--font-data")}`; g.textBaseline = "top"; g.fillText(`+${m.toFixed(0)} kW import`, 2, 0); g.textBaseline = "bottom"; g.fillText(`−${m.toFixed(0)} kW export`, 2, hgt); }
+  const sm = S.summary, done = sm && curIndex() >= S.frames.length - 1 && !S.es; $("iBill").hidden = !done;
+  if (done) { const g0 = sm.grid_only_bills[i], s1 = (sm.settled_bills || sm.raw_bills)[i];
+    $("iBill").innerHTML = `Day's bill: ${eur(g0)} on the grid alone, <b>${eur(s1)}</b> after settlement <span style="color:var(--good)">(saves ${eur(g0 - s1)})</span>`; }
+}
+
+// ---------------------------------------------------------------- bills and comparison
+function renderLedger() {
+  const sm = S.summary;
+  if (!sm || S.es) { $("ledger").innerHTML = '<tr><td colspan="6" class="l note">Bills appear when the day has finished.</td></tr>'; $("billsBadge").innerHTML = ""; return; }
+  const settled = sm.settled_bills || sm.raw_bills;
+  $("ledger").innerHTML = S.households.map((h, i) => { const g0 = sm.grid_only_bills[i], s1 = settled[i];
+    return `<tr><td>Home ${h.id}</td><td class="num">${h.pv_kw ? h.pv_kw.toFixed(1) + " kW" : "—"}</td><td class="num">${h.battery_kwh ? h.battery_kwh.toFixed(1) + " kWh" : "—"}</td><td class="num">${eur(g0)}</td><td class="num">${eur(s1)}</td><td class="num saving">${eur(g0 - s1)}</td></tr>`; }).join("") +
+    `<tr><td><b>Community</b></td><td></td><td></td><td class="num"><b>${eur(sm.grid_only)}</b></td><td class="num"><b>${eur(sm.cost)}</b></td><td class="num saving"><b>${eur(sm.grid_only - sm.cost)}</b></td></tr>`;
+  $("billsBadge").innerHTML = sm.all_better_off ? '<span class="pill ok">every home better off</span>' : '<span class="pill crit">a home is worse off</span>';
+}
+function renderCompare(res, title) {
+  $("cmpSub").textContent = title;
+  const rows = res.rows.slice().sort((a, b) => a.rank - b.rank);
+  $("cmpBody").innerHTML = `<table class="data"><thead><tr><th>#</th><th class="l">Controller</th><th>Cost / day</th><th class="l">Saving vs grid-only (${eur(res.grid_only)})</th><th>Peak</th><th>Unserved</th><th></th></tr></thead><tbody>` +
+    rows.map((r, k) => { const c = S.controllers.find((x) => x.key === r.key) || {};
+      r.shown = k && Math.abs(r.cost_battery_neutral - rows[k - 1].cost_battery_neutral) < 0.005 ? rows[k - 1].shown : k + 1;
+      return `<tr class="${r.shown === 1 ? "best" : ""}"><td class="num">${r.shown}</td><td class="l ctrlname">${esc(r.label)}<small>${esc(c.description || "")}</small></td>
+        <td class="num">${eur(r.cost_battery_neutral)}</td><td class="l" style="min-width:150px"><div style="display:flex;gap:8px;align-items:center"><div class="hbar"><span style="width:${clamp(r.saving_pct, 0, 100)}%;opacity:${r.shown === 1 ? 1 : 0.55}"></span></div><span class="num">${r.saving_pct.toFixed(1)}%</span></div></td>
+        <td class="num">${r.peak_kw.toFixed(0)} kW</td><td class="num">${r.unserved_kwh < 1e-3 ? '<span class="pill ok">none</span>' : `<span class="pill crit">${r.unserved_kwh.toFixed(2)} kWh</span>`}</td>
+        <td><button data-watch="${r.key}">Watch</button></td></tr>`; }).join("") + "</tbody></table>";
+  $("cmpBody").querySelectorAll("[data-watch]").forEach((b) => b.addEventListener("click", () => {
+    const k = b.dataset.watch; $("compareWrap").hidden = true;
+    if (res.runs) { const run = res.runs[k]; setRun(run.frames, run.summary, res.households, res.feeder_limit_kw, res._scen, k, res._outage); $("note").hidden = true; setPlay(true); }
+    else playRecorded(res._scen, k);
+  }));
+}
+async function openCompare() {
+  $("compareWrap").hidden = false; $("cmpClose").focus();
+  const scen = S.draft.scen, outage = Object.assign({}, S.draft.outage);
+  if (!S.server) { const sc = window.TRACES.scenarios[scen === "custom" ? "normal" : scen]; renderCompare(Object.assign({ _scen: scen }, sc.compare), `${sc.label} · 25-home study community · recorded`); return; }
+  $("cmpSub").textContent = ""; $("cmpBody").innerHTML = `<p class="note"><span class="spinner"></span>Simulating ${S.controllers.length} controllers on ${S.spec.n_households} homes. This takes about ${Math.max(10, Math.round(S.spec.n_households * 0.8))} seconds.</p>`;
+  try { const res = await api("/api/compare", { spec: S.spec, scenario: scen === "custom" ? outage : scen }); res._scen = scen; res._outage = scen === "custom" ? outage : null;
+    renderCompare(res, `${scenarioLabel(scen, outage)} · ${S.spec.n_households} homes`); } catch (e) { $("cmpBody").innerHTML = `<p class="callout">The comparison did not run: ${esc(e.message)}</p>`; }
+}
+
+// ---------------------------------------------------------------- set-up drawer
+function openSetup(tab) { select(-1); $("setup").hidden = false; if (tab) setTab(tab); }
+function closeSetup() { $("setup").hidden = true; }
+function setTab(name) { [["Run", "paneRun"], ["Community", "paneCommunity"]].forEach(([t, p]) => { const on = t === name; $("tab" + t).setAttribute("aria-selected", String(on)); $(p).hidden = !on; }); }
+function renderRunPane() {
+  $("ctrlList").innerHTML = S.controllers.map((c, k) => `<label class="opt"><input type="radio" name="ctrl" value="${c.key}" ${c.key === S.draft.ctrl ? "checked" : ""}><span class="t">${esc(c.label.replace(" (proposed)", ""))}${k === 0 ? '<span class="tag">PROPOSED</span>' : ""}</span><span class="d">${esc(c.description)}</span></label>`).join("");
+  const scens = Object.entries(S.scenarioLabels).concat(S.server ? [["custom", "Custom outage"]] : []);
+  $("scenList").innerHTML = scens.map(([k, l]) => `<label class="opt"><input type="radio" name="scen" value="${k}" ${k === S.draft.scen ? "checked" : ""}><span class="t">${esc(l)}</span></label>`).join("");
+  $("customOutage").hidden = S.draft.scen !== "custom";
+  document.querySelectorAll('input[name="ctrl"]').forEach((r) => r.addEventListener("change", () => (S.draft.ctrl = r.value)));
+  document.querySelectorAll('input[name="scen"]').forEach((r) => r.addEventListener("change", () => { S.draft.scen = r.value; $("customOutage").hidden = r.value !== "custom"; }));
+}
+function initOutageInputs() {
+  for (let s = 0; s <= 95; s++) $("coStart").add(new Option(stepClock(s), s, false, s === 68));
+  for (let s = 1; s <= 96; s++) $("coEnd").add(new Option(stepClock(s), s, false, s === 84));
+  [0.04, 0.1, 0.2, 0.3, 0.5, 0.75].forEach((v) => $("coShare").add(new Option(`${Math.round(v * 100)}%`, v, false, v === 0.3)));
+  const sync = () => { const o = S.draft.outage; o.kind = $("coKind").value; o.start = +$("coStart").value; o.end = +$("coEnd").value; o.share = +$("coShare").value;
+    $("coShareWrap").hidden = o.kind !== "homes"; if (o.end <= o.start) { o.end = Math.min(96, o.start + 1); $("coEnd").value = o.end; } };
+  ["coKind", "coStart", "coEnd", "coShare"].forEach((id) => $(id).addEventListener("change", sync)); sync();
+}
+function renderHomes() {
+  const sp = S.spec, ds = S.dataset; if (!sp) return; const dis = S.server ? "" : "disabled";
+  $("homeRows").innerHTML = sp.houses.map((h, i) => { const o = ds.houses[i] || h, ch = (k) => (Math.abs(h[k] - o[k]) > 1e-9 ? "changed" : "");
+    const evOpts = Array.from({ length: (o.evs ?? 2) + 1 }, (_, v) => `<option value="${v}" ${v === h.evs ? "selected" : ""}>${v}</option>`).join("");
+    return `<tr><td>${i + 1}</td><td><input class="${ch("pv_kw")}" data-i="${i}" data-k="pv_kw" type="number" min="0" max="15" step="0.1" value="${h.pv_kw}" aria-label="Home ${i + 1} solar kW" ${dis}></td>
+      <td><input class="${ch("battery_kwh")}" data-i="${i}" data-k="battery_kwh" type="number" min="0" max="30" step="0.1" value="${h.battery_kwh}" aria-label="Home ${i + 1} battery kWh" ${dis}></td>
+      <td><select class="${ch("evs")}" data-i="${i}" data-k="evs" aria-label="Home ${i + 1} cars" ${dis}>${evOpts}</select></td>
+      <td><input class="${ch("load_scale")}" data-i="${i}" data-k="load_scale" type="number" min="0.25" max="3" step="0.05" value="${h.load_scale}" aria-label="Home ${i + 1} demand multiplier" ${dis}></td></tr>`; }).join("");
+  $("homeRows").querySelectorAll("[data-k]").forEach((el) => el.addEventListener("change", () => { const k = el.dataset.k, i = +el.dataset.i; let v = Number(el.value);
+    if (!Number.isFinite(v)) v = S.dataset.houses[i][k]; v = clamp(v, ...RANGE[k]); if (k === "evs") v = Math.round(v);
+    S.spec.houses[i][k] = v; el.value = v; el.classList.toggle("changed", Math.abs(v - S.dataset.houses[i][k]) > 1e-9); countChanged(); }));
+  ["nHomes", "nHomesNum", "drawSeed", "feederKw", "exportKw", "drawHomes", "bPv", "bBat", "bLoad", "bApply", "resetHomes"].forEach((id) => ($(id).disabled = !S.server));
+  $("nHomes").value = $("nHomesNum").value = sp.n_households; $("drawSeed").value = sp.seed; $("feederKw").value = sp.feeder_kw_per_home; $("exportKw").value = sp.export_kw_per_home; countChanged();
+}
+function countChanged() {
+  if (!S.spec || !S.dataset) return; let n = 0;
+  S.spec.houses.forEach((h, i) => KEYS.forEach((k) => { if (Math.abs(h[k] - S.dataset.houses[i][k]) > 1e-9) n++; }));
+  if (Math.abs(S.spec.feeder_kw_per_home - S.dataset.feeder_kw_per_home) > 1e-9) n++; if (Math.abs(S.spec.export_kw_per_home - S.dataset.export_kw_per_home) > 1e-9) n++;
+  $("changedCount").hidden = !n; $("changedCount").textContent = `${n} change${n === 1 ? "" : "s"}`;
+}
+async function drawHomes() {
+  const n = clamp(Math.round(+$("nHomesNum").value || 25), 4, 60), seed = clamp(Math.round(+$("drawSeed").value || 0), 0, 9999);
+  $("setupMsg").innerHTML = '<span class="spinner"></span>Drawing homes…';
+  try { const d = await api(`/api/defaults?n=${n}&seed=${seed}`); S.dataset = JSON.parse(JSON.stringify(d));
+    d.feeder_kw_per_home = clamp(+$("feederKw").value || 8, 4, 17); d.export_kw_per_home = clamp(+$("exportKw").value || 5, 2, 17);
+    S.spec = d; renderHomes(); $("setupMsg").textContent = `${n} homes drawn. Press Run day.`; } catch (e) { $("setupMsg").textContent = e.message; }
+}
+
+// ---------------------------------------------------------------- wiring
+$("iClose").addEventListener("click", () => select(-1));
+$("openSetup").addEventListener("click", () => ($("setup").hidden ? openSetup() : closeSetup()));
+$("closeSetup").addEventListener("click", closeSetup);
+$("tabRun").addEventListener("click", () => setTab("Run")); $("tabCommunity").addEventListener("click", () => setTab("Community"));
+$("nHomes").addEventListener("input", () => ($("nHomesNum").value = $("nHomes").value));
+$("nHomesNum").addEventListener("change", () => { const v = clamp(Math.round(+$("nHomesNum").value || 25), 4, 60); $("nHomesNum").value = $("nHomes").value = v; });
+$("drawHomes").addEventListener("click", drawHomes);
+$("feederKw").addEventListener("change", () => { S.spec.feeder_kw_per_home = clamp(+$("feederKw").value || 8, 4, 17); $("feederKw").value = S.spec.feeder_kw_per_home; countChanged(); });
+$("exportKw").addEventListener("change", () => { S.spec.export_kw_per_home = clamp(+$("exportKw").value || 5, 2, 17); $("exportKw").value = S.spec.export_kw_per_home; countChanged(); });
+$("bApply").addEventListener("click", () => { const set = [["bPv", "pv_kw"], ["bBat", "battery_kwh"], ["bLoad", "load_scale"]].filter(([id]) => $(id).value !== "");
+  set.forEach(([id, k]) => { const v = clamp(+$(id).value, ...RANGE[k]); S.spec.houses.forEach((h) => (h[k] = v)); $(id).value = ""; });
+  renderHomes(); $("setupMsg").textContent = set.length ? "Applied to every home." : "Enter a value first."; });
+$("resetHomes").addEventListener("click", () => { S.spec = JSON.parse(JSON.stringify(S.dataset)); renderHomes(); $("setupMsg").textContent = "Dataset values restored."; });
+$("runDay").addEventListener("click", async () => {
+  const d = S.draft;
+  if (!S.server) { playRecorded(d.scen === "custom" ? "normal" : d.scen, d.ctrl); closeSetup(); return; }
+  if (S.spec.n_households !== +$("nHomesNum").value || S.spec.seed !== +$("drawSeed").value) await drawHomes();
+  $("setupMsg").innerHTML = '<span class="spinner"></span>Starting…'; $("runDay").disabled = true;
+  try { await playLive(d.scen, d.ctrl, Object.assign({}, d.outage)); $("setupMsg").textContent = ""; closeSetup(); } catch (e) { $("setupMsg").textContent = e.message; }
+  $("runDay").disabled = false;
+});
+$("play").addEventListener("click", () => {
+  if (S.es) { S.es.close(); S.es = null; $("cut").hidden = true; setPlay(false); return; }
+  if (!S.frames.length) { openSetup("Run"); return; }
+  if (!S.playing && S.ft >= S.frames.length - 0.05) S.ft = 0; setPlay(!S.playing);
+});
+$("cut").addEventListener("click", () => { S.cut = !S.cut; $("cut").setAttribute("aria-pressed", String(S.cut)); $("cut").textContent = S.cut ? "Restore link" : "Cut link";
+  if (S.session) api(`/api/control?session=${S.session}&cut=${S.cut ? 1 : 0}`).catch(() => {}); });
+$("scrub").addEventListener("input", (e) => { if (!S.es && S.frames.length) { S.ft = clamp(+e.target.value, 0, S.frames.length - 0.01); refresh(true); } });
+$("speed").addEventListener("change", (e) => { S.speed = +e.target.value; if (S.session) api(`/api/control?session=${S.session}&speed=${S.speed * 2}`).catch(() => {}); });
+$("openCompare").addEventListener("click", openCompare); $("cmpClose").addEventListener("click", () => ($("compareWrap").hidden = true));
+$("openBills").addEventListener("click", () => { renderLedger(); $("billsWrap").hidden = false; $("billsClose").focus(); });
+$("billsClose").addEventListener("click", () => ($("billsWrap").hidden = true));
+["compareWrap", "billsWrap"].forEach((id) => $(id).addEventListener("click", (e) => { if (e.target.id === id) $(id).hidden = true; }));
+document.addEventListener("keydown", (e) => { if (e.key === "Escape") { if (!$("compareWrap").hidden) $("compareWrap").hidden = true; else if (!$("billsWrap").hidden) $("billsWrap").hidden = true; else if (!$("inspect").hidden) select(-1); else closeSetup(); } });
+addEventListener("resize", () => refresh(true));
+try { matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () => refresh(true)); } catch (e) {}
+new MutationObserver(() => refresh(true)).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+
+let last = performance.now();
+function loop(now) {
+  const dt = Math.min(0.1, (now - last) / 1000); last = now;
+  if (S.es && S.frames.length) S.ft = S.frames.length - 0.01;
+  else if (S.playing && S.frames.length) { S.ft += dt * S.speed * 2; if (S.ft >= S.frames.length - 0.01) { S.ft = S.frames.length - 0.01; setPlay(false); refresh(true); } }
+  refresh(false); requestAnimationFrame(loop);
+}
+(async function init() {
+  initOutageInputs();
+  const live = await detectServer();
+  if (live) {
+    S.server = true; S.controllers = live.controllers; S.scenarioLabels = live.scenarios;
+    S.spec = JSON.parse(JSON.stringify(live.default)); S.dataset = JSON.parse(JSON.stringify(live.default));
+    $("modeBadge").textContent = "Live"; $("modeBadge").className = "badge live";
+    S.limit = live.feeder_limit_kw; S.households = live.households; buildBoard();
+    $("runChip").textContent = `Ready · ${live.households.length} homes · choose a run in Set up`;
+    renderRunPane(); renderHomes(); openSetup("Run"); $("setupMsg").textContent = "Choose a controller and scenario."; setPlay(false); refresh(true);
+  } else if (window.TRACES) {
+    const T = window.TRACES; S.controllers = T.meta.controllers; S.scenarioLabels = T.meta.scenarios;
+    S.spec = { n_households: 25, seed: 0, feeder_kw_per_home: 8, export_kw_per_home: 5, houses: T.meta.households.map((h) => ({ pv_kw: h.pv_kw, battery_kwh: h.battery_kwh, evs: h.evs, load_scale: 1 })) };
+    S.dataset = JSON.parse(JSON.stringify(S.spec)); renderRunPane(); renderHomes(); $("replayOnly").hidden = false;
+    playRecorded("normal", "hybrid"); S.ft = 28; setPlay(false); refresh(true);
+  } else { $("alert").hidden = false; $("alert").textContent = "No data: run python scripts/export_platform_data.py, or start python platform/server.py"; return; }
+  requestAnimationFrame(loop);
+})();
+})();
+</script>
+</body>
+</html>

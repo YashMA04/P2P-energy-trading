@@ -1,0 +1,147 @@
+[
+ {
+  "test": {
+   "net_cost_eur": 155.90089616056858,
+   "net_cost_inv_neutral_eur": 157.53574320551334,
+   "unserved_kwh": 6.4373016357421875e-06,
+   "ev_shortfall_kwh": 0.0,
+   "individual_rationality": 0.7200000286102295,
+   "fairness_jain": 0.9929130673408508,
+   "p2p_volume_kwh": 281.4024625234306,
+   "bess_drawdown_kwh": 14.944668769836426,
+   "unserved_max": 6.4373016357421875e-06,
+   "shortfall_max": 0.0
+  },
+  "val": {
+   "net_cost_eur": 165.3541136304422,
+   "net_cost_inv_neutral_eur": 167.76797590353925,
+   "unserved_kwh": 3.7550926208496094e-06,
+   "ev_shortfall_kwh": 0.0,
+   "individual_rationality": 0.6350000090897083,
+   "fairness_jain": 0.9902483373880386,
+   "p2p_volume_kwh": 270.79319097520784,
+   "bess_drawdown_kwh": 22.05294179916382,
+   "unserved_max": 1.0773539543151855e-05,
+   "shortfall_max": 0.0
+  },
+  "iter": 0,
+  "minutes": 0.7055780768394471,
+  "dagger_states": 0
+ },
+ {
+  "test": {
+   "net_cost_eur": 158.77148512738736,
+   "net_cost_inv_neutral_eur": 161.74456290143522,
+   "unserved_kwh": 0.0,
+   "ev_shortfall_kwh": 0.0,
+   "individual_rationality": 0.6800000071525574,
+   "fairness_jain": 0.9759848117828369,
+   "p2p_volume_kwh": 256.802681915462,
+   "bess_drawdown_kwh": 27.159574508666992,
+   "unserved_max": 0.0,
+   "shortfall_max": 0.0
+  },
+  "val": {
+   "net_cost_eur": 159.42920356330336,
+   "net_cost_inv_neutral_eur": 162.73034208354414,
+   "unserved_kwh": 0.0,
+   "ev_shortfall_kwh": 0.0,
+   "individual_rationality": 0.6800000071525574,
+   "fairness_jain": 0.9765734225511551,
+   "p2p_volume_kwh": 257.54358422616497,
+   "bess_drawdown_kwh": 30.159813165664673,
+   "unserved_max": 0.0,
+   "shortfall_max": 0.0
+  },
+  "iter": 1,
+  "minutes": 19.482824158668517,
+  "dagger_states": 176
+ },
+ {
+  "test": {
+   "net_cost_eur": 121.2246156642305,
+   "net_cost_inv_neutral_eur": 121.67969036196342,
+   "unserved_kwh": 2.3245811462402344e-06,
+   "ev_shortfall_kwh": 0.0,
+   "individual_rationality": 0.9599999785423279,
+   "fairness_jain": 0.9956649541854858,
+   "p2p_volume_kwh": 330.62693502381444,
+   "bess_drawdown_kwh": 4.178723335266113,
+   "unserved_max": 2.3245811462402344e-06,
+   "shortfall_max": 0.0
+  },
+  "val": {
+   "net_cost_eur": 120.87933577109402,
+   "net_cost_inv_neutral_eur": 121.5402642700476,
+   "unserved_kwh": 4.381872713565826e-06,
+   "ev_shortfall_kwh": 0.0,
+   "individual_rationality": 1.0,
+   "fairness_jain": 0.9966593682765961,
+   "p2p_volume_kwh": 343.5831591114402,
+   "bess_drawdown_kwh": 6.073297023773193,
+   "unserved_max": 9.88692045211792e-06,
+   "shortfall_max": 0.0
+  },
+  "iter": 2,
+  "minutes": 42.951242717107135,
+  "dagger_states": 348
+ },
+ {
+  "test": {
+   "net_cost_eur": 115.70584128681382,
+   "net_cost_inv_neutral_eur": 119.01282285038194,
+   "unserved_kwh": 0.0,
+   "ev_shortfall_kwh": 0.0,
+   "individual_rationality": 1.0,
+   "fairness_jain": 0.9953634738922119,
+   "p2p_volume_kwh": 323.90276765078306,
+   "bess_drawdown_kwh": 30.245201110839844,
+   "unserved_max": 0.0,
+   "shortfall_max": 0.0
+  },
+  "val": {
+   "net_cost_eur": 115.38102180356813,
+   "net_cost_inv_neutral_eur": 118.7933135091765,
+   "unserved_kwh": 1.2973323464393616e-06,
+   "ev_shortfall_kwh": 0.0,
+   "individual_rationality": 1.0,
+   "fairness_jain": 0.9946343898773193,
+   "p2p_volume_kwh": 328.01530755800195,
+   "bess_drawdown_kwh": 31.2136127948761,
+   "unserved_max": 4.678964614868164e-06,
+   "shortfall_max": 0.0
+  },
+  "iter": 3,
+  "minutes": 64.33544092575708,
+  "dagger_states": 526
+ },
+ {
+  "test": {
+   "net_cost_eur": 112.61712038894244,
+   "net_cost_inv_neutral_eur": 115.09261048217364,
+   "unserved_kwh": 2.652406692504883e-06,
+   "ev_shortfall_kwh": 0.0,
+   "individual_rationality": 1.0,
+   "fairness_jain": 0.9934302568435669,
+   "p2p_volume_kwh": 340.3277629930526,
+   "bess_drawdown_kwh": 22.6894474029541,
+   "unserved_max": 2.652406692504883e-06,
+   "shortfall_max": 0.0
+  },
+  "val": {
+   "net_cost_eur": 113.331270999782,
+   "net_cost_inv_neutral_eur": 115.52922501372568,
+   "unserved_kwh": 2.300366759300232e-06,
+   "ev_shortfall_kwh": 0.0,
+   "individual_rationality": 0.994999997317791,
+   "fairness_jain": 0.9936712458729744,
+   "p2p_volume_kwh": 342.8101327724289,
+   "bess_drawdown_kwh": 20.13482391834259,
+   "unserved_max": 4.842877388000488e-06,
+   "shortfall_max": 0.0
+  },
+  "iter": 4,
+  "minutes": 85.65851502418518,
+  "dagger_states": 689
+ }
+]

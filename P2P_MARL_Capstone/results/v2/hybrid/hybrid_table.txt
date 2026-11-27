@@ -1,0 +1,53 @@
+Outage scenarios (deterministic reporting day, battery-neutral EUR/day; mean over seeds [worst])
+
+Scenario: no outage
+  MAT, no fallback (hold last setpoint)                       112.00 [ 114.33]  unserved max   0.00  shortfall max  0.00  (n=3)
+  MAT + rule fallback                                         112.00 [ 114.33]  unserved max   0.00  shortfall max  0.00  (n=3)
+  MAT + MAPPO fallback, offline households only               112.00 [ 114.33]  unserved max   0.00  shortfall max  0.00  (n=3)
+  MAT + MAPPO fallback, whole community switches (proposed)   112.00 [ 114.33]  unserved max   0.00  shortfall max  0.00  (n=3)
+    same, WITHOUT fallback envelope (ablation)                112.00 [ 114.33]  unserved max   0.00  shortfall max  0.00  (n=3)
+  MAPPO student everywhere                                    116.06 [ 117.91]  unserved max   0.00  shortfall max  0.00  (n=3)
+  Rule controller everywhere                                  143.90 [ 143.90]  unserved max   0.00  shortfall max  0.00  (n=1)
+  proposed, 8 unseen noisy days                               112.42 [ 114.75]  unserved max   0.00  shortfall max  0.00  (n=3 seeds x 8 days)
+
+Scenario: all households offline 17:00-21:00
+  MAT, no fallback (hold last setpoint)                       127.33 [ 127.66]  unserved max   0.00  shortfall max  0.00  (n=3)
+  MAT + rule fallback                                         126.94 [ 127.93]  unserved max   0.00  shortfall max  0.00  (n=3)
+  MAT + MAPPO fallback, offline households only               112.43 [ 114.78]  unserved max   0.00  shortfall max  0.00  (n=3)
+  MAT + MAPPO fallback, whole community switches (proposed)   112.43 [ 114.78]  unserved max   0.00  shortfall max  0.00  (n=3)
+    same, WITHOUT fallback envelope (ablation)                112.44 [ 114.78]  unserved max   0.00  shortfall max  0.00  (n=3)
+  MAPPO student everywhere                                    116.02 [ 117.91]  unserved max   0.00  shortfall max  0.00  (n=3)
+  Rule controller everywhere                                  143.90 [ 143.90]  unserved max   0.00  shortfall max  0.00  (n=1)
+  proposed, 8 unseen noisy days                               112.95 [ 115.72]  unserved max   0.00  shortfall max  0.00  (n=3 seeds x 8 days)
+
+Scenario: one household offline all day
+  MAT, no fallback (hold last setpoint)                       122.77 [ 124.63]  unserved max   0.00  shortfall max  0.00  (n=3)
+  MAT + rule fallback                                         120.10 [ 121.18]  unserved max   0.00  shortfall max  0.00  (n=3)
+  MAT + MAPPO fallback, offline households only               119.24 [ 120.86]  unserved max   0.00  shortfall max  0.00  (n=3)
+  MAT + MAPPO fallback, whole community switches (proposed)   117.32 [ 118.25]  unserved max   0.00  shortfall max  0.00  (n=3)
+    same, WITHOUT fallback envelope (ablation)                116.06 [ 117.91]  unserved max   0.00  shortfall max  0.00  (n=3)
+  MAPPO student everywhere                                    117.32 [ 118.25]  unserved max   0.00  shortfall max  0.00  (n=3)
+  Rule controller everywhere                                  143.91 [ 143.91]  unserved max   0.00  shortfall max  0.00  (n=1)
+  proposed, 8 unseen noisy days                               116.96 [ 118.46]  unserved max   0.00  shortfall max  0.00  (n=3 seeds x 8 days)
+
+Scenario: 30% of households offline all day
+  MAT, no fallback (hold last setpoint)                       155.49 [ 172.49]  unserved max   0.00  shortfall max  0.00  (n=3)
+  MAT + rule fallback                                         144.34 [ 163.13]  unserved max   0.00  shortfall max  0.00  (n=3)
+  MAT + MAPPO fallback, offline households only               137.06 [ 158.75]  unserved max   0.00  shortfall max  0.00  (n=3)
+  MAT + MAPPO fallback, whole community switches (proposed)   118.61 [ 120.54]  unserved max   0.00  shortfall max  0.00  (n=3)
+    same, WITHOUT fallback envelope (ablation)                116.06 [ 117.91]  unserved max   0.00  shortfall max  0.00  (n=3)
+  MAPPO student everywhere                                    118.61 [ 120.54]  unserved max   0.00  shortfall max  0.00  (n=3)
+  Rule controller everywhere                                  143.90 [ 143.90]  unserved max   0.00  shortfall max  0.00  (n=1)
+  proposed, 8 unseen noisy days                               118.80 [ 120.77]  unserved max   0.00  shortfall max  0.00  (n=3 seeds x 8 days)
+
+Scenario: operator down all day
+  MAT, no fallback (hold last setpoint)                       173.84 [ 173.84]  unserved max   0.00  shortfall max  0.00  (n=3)
+  MAT + rule fallback                                         143.86 [ 143.86]  unserved max   0.00  shortfall max  0.00  (n=3)
+  MAT + MAPPO fallback, offline households only               123.55 [ 125.30]  unserved max   0.00  shortfall max  0.00  (n=3)
+  MAT + MAPPO fallback, whole community switches (proposed)   123.55 [ 125.30]  unserved max   0.00  shortfall max  0.00  (n=3)
+    same, WITHOUT fallback envelope (ablation)                116.06 [ 117.91]  unserved max   0.00  shortfall max  0.00  (n=3)
+  MAPPO student everywhere                                    123.55 [ 125.30]  unserved max   0.00  shortfall max  0.00  (n=3)
+  Rule controller everywhere                                  143.86 [ 143.86]  unserved max   0.00  shortfall max  0.00  (n=1)
+  proposed, 8 unseen noisy days                               123.54 [ 125.70]  unserved max   0.00  shortfall max  0.00  (n=3 seeds x 8 days)
+
+[2.9 min]

@@ -1,0 +1,59 @@
+START Sat Aug  8 23:56:28 UTC 2026
+
+========================================================================
+           DIAGNOSIS: why the original MAPPO could not learn            
+========================================================================
+quantity                                      legacy             fixed
+------------------------------------------------------------------------
+value_loss                                     6.389             0.074
+actor_grad_norm                                0.377             0.331
+critic_grad_norm                              21.206             2.694
+joint_grad_norm                               21.209             2.715
+clip_rescale_factor                            0.024             1.000
+effective_actor_lr                         7.072e-06         3.000e-04
+reward_std_across_agents                   1.416e-08             0.982
+distinct_advantages_per_step                   1.000            25.000
+------------------------------------------------------------------------
+Read: under the legacy coupling the critic gradient dominates the joint
+norm, so a single clip_grad_norm(0.5) rescales the actor gradient with it.
+The actor's effective learning rate collapses by ~3 orders of magnitude,
+and every agent shares one advantage, so no per-household credit signal
+survives. The policy random-walks around its initialisation, which is
+exactly the seed-dependent behaviour the original study reported.
+
+Saved: results/diagnosis.json
+community: 25 households | {'n_pv': 20, 'n_bess': 15, 'n_ev': 50, 'daily_load_kwh': 717.1788940429688, 'daily_pv_kwh': 284.9777526855469, 'ev_physics': {'home_charge_kw_before': (27.700000762939453, 111.80000305175781), 'home_charge_kw_after': (7.400000095367432, 11.0), 'n_ev': 50, 'mean_trip_kwh': 8.603765487670898, 'total_ev_energy_kwh': 430.1882629394531, 'infeasible_departures': 0}}
+
+policy                      cost EUR   save %     gap     IR   Jain  P2P kWh  unserved  peak kW
+-----------------------------------------------------------------------------------------------
+no_flexibility                175.89     0.00    0.00  1.000  1.000     0.00      0.00    200.0
+deadline_charging             208.93   -18.79   -0.37  0.000  0.998     0.00    103.52    200.0
+greedy_self_consumption       199.79   -13.59   -0.27  0.280  0.991     0.00      0.00    200.0
+tariff_aware_p2p              149.61    14.94    0.30  0.960  0.996    40.88     28.73    200.0
+perfect_foresight_lp           87.52    50.24    1.00    nan    nan      nan      0.00    200.0
+-----------------------------------------------------------------------------------------------
+gap = fraction of the achievable saving (grid-only -> LP optimum) realised
+Saved: results/baselines.json
+=== BASELINES DONE Sat Aug  8 23:56:55 UTC 2026 ===
+
+=== seed 0 (100 updates) ===
+update    1/100 k=0.15 R=+0.170 vloss=0.4488 kl=0.0050 ent=2.10 gA=0.59 gC=2.24 lam_ir=0.17 lam_grid=0.04
+  [eval @ 10] cost=148.51 IR=0.960 Jain=0.996 unserved=30.17 gate=FAIL unserved_kwh
+  [eval @ 20] cost=147.86 IR=0.960 Jain=0.997 unserved=26.36 gate=FAIL unserved_kwh
+update   25/100 k=0.56 R=+0.118 vloss=0.0011 kl=0.0044 ent=2.13 gA=0.65 gC=0.06 lam_ir=0.24 lam_grid=0.02
+  [eval @ 30] cost=149.84 IR=0.960 Jain=0.998 unserved=29.84 gate=FAIL unserved_kwh,cost_ratio
+  [eval @ 40] cost=147.02 IR=1.000 Jain=0.998 unserved=21.48 gate=FAIL unserved_kwh
+  [eval @ 50] cost=149.10 IR=0.960 Jain=0.998 unserved=24.86 gate=FAIL unserved_kwh
+update   50/100 k=0.99 R=+0.134 vloss=0.0010 kl=0.0038 ent=1.94 gA=0.67 gC=0.05 lam_ir=0.27 lam_grid=0.02
+  [eval @ 60] cost=149.29 IR=1.000 Jain=0.998 unserved=24.90 gate=FAIL unserved_kwh
+  [eval @ 70] cost=151.93 IR=0.960 Jain=0.998 unserved=32.80 gate=FAIL unserved_kwh,cost_ratio
+update   75/100 k=1.00 R=+0.143 vloss=0.0011 kl=0.0032 ent=1.84 gA=0.69 gC=0.05 lam_ir=0.32 lam_grid=0.02
+  [eval @ 80] cost=153.51 IR=0.960 Jain=0.999 unserved=36.95 gate=FAIL unserved_kwh,cost_ratio
+  [eval @ 90] cost=157.67 IR=0.960 Jain=0.999 unserved=47.91 gate=FAIL unserved_kwh,cost_ratio
+  [eval @ 100] cost=158.47 IR=0.920 Jain=0.998 unserved=49.38 gate=FAIL unserved_kwh,cost_ratio
+update  100/100 k=1.00 R=+0.143 vloss=0.0012 kl=0.0000 ent=1.81 gA=0.73 gC=0.03 lam_ir=0.36 lam_grid=0.02
+  seed 0: cost=158.47 gap=0.20 gate=FAIL
+
+=== seed 1 (100 updates) ===
+update    1/100 k=0.15 R=+0.168 vloss=0.4462 kl=0.0045 ent=2.09 gA=0.60 gC=1.78 lam_ir=0.17 lam_grid=0.04
+  [eval @ 10] cost=152.56 IR=0.960 Jain=0.998 unserved=25.07 gate=FAIL unserved_kwh,cost_ratio

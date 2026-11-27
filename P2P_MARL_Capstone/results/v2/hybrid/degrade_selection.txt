@@ -1,0 +1,8 @@
+Degrade threshold selection (validation days, seed 777000; mean EUR/day over 3 model seeds x 3 subsets)
+ share offline households  keep MAT all local     better
+          0.04          1    118.23    116.44  all local
+          0.12          3    123.03    116.70  all local
+          0.20          5    123.32    116.69  all local
+          0.30          8    129.33    118.91  all local
+          0.50         12    128.41    119.46  all local
+selected degrade_frac = 0.04  (smallest share offline at which switching everyone to local wins)

@@ -1,0 +1,1419 @@
+{
+ "none": {
+  "MAT, no fallback (hold last setpoint)": [
+   {
+    "seed": 0,
+    "cost": 114.33128472867524,
+    "unserved": 7.599592208862305e-07,
+    "shortfall": 0.0,
+    "ir": 1.0,
+    "modes": {
+     "central": 1.0,
+     "local": 0.0,
+     "rule": 0.0,
+     "stale": 0.0
+    }
+   },
+   {
+    "seed": 1,
+    "cost": 113.4646645507477,
+    "unserved": 6.61611557006836e-06,
+    "shortfall": 0.0,
+    "ir": 1.0,
+    "modes": {
+     "central": 1.0,
+     "local": 0.0,
+     "rule": 0.0,
+     "stale": 0.0
+    }
+   },
+   {
+    "seed": 2,
+    "cost": 108.2083209892527,
+    "unserved": 1.1414289474487305e-05,
+    "shortfall": 0.0,
+    "ir": 1.0,
+    "modes": {
+     "central": 1.0,
+     "local": 0.0,
+     "rule": 0.0,
+     "stale": 0.0
+    }
+   }
+  ],
+  "MAT + rule fallback": [
+   {
+    "seed": 0,
+    "cost": 114.33128472867524,
+    "unserved": 7.599592208862305e-07,
+    "shortfall": 0.0,
+    "ir": 1.0,
+    "modes": {
+     "central": 1.0,
+     "local": 0.0,
+     "rule": 0.0,
+     "stale": 0.0
+    }
+   },
+   {
+    "seed": 1,
+    "cost": 113.4646645507477,
+    "unserved": 6.61611557006836e-06,
+    "shortfall": 0.0,
+    "ir": 1.0,
+    "modes": {
+     "central": 1.0,
+     "local": 0.0,
+     "rule": 0.0,
+     "stale": 0.0
+    }
+   },
+   {
+    "seed": 2,
+    "cost": 108.2083209892527,
+    "unserved": 1.1414289474487305e-05,
+    "shortfall": 0.0,
+    "ir": 1.0,
+    "modes": {
+     "central": 1.0,
+     "local": 0.0,
+     "rule": 0.0,
+     "stale": 0.0
+    }
+   }
+  ],
+  "MAT + MAPPO fallback, offline households only": [
+   {
+    "seed": 0,
+    "cost": 114.33128472867524,
+    "unserved": 7.599592208862305e-07,
+    "shortfall": 0.0,
+    "ir": 1.0,
+    "modes": {
+     "central": 1.0,
+     "local": 0.0,
+     "rule": 0.0,
+     "stale": 0.0
+    }
+   },
+   {
+    "seed": 1,
+    "cost": 113.4646645507477,
+    "unserved": 6.61611557006836e-06,
+    "shortfall": 0.0,
+    "ir": 1.0,
+    "modes": {
+     "central": 1.0,
+     "local": 0.0,
+     "rule": 0.0,
+     "stale": 0.0
+    }
+   },
+   {
+    "seed": 2,
+    "cost": 108.2083209892527,
+    "unserved": 1.1414289474487305e-05,
+    "shortfall": 0.0,
+    "ir": 1.0,
+    "modes": {
+     "central": 1.0,
+     "local": 0.0,
+     "rule": 0.0,
+     "stale": 0.0
+    }
+   }
+  ],
+  "MAT + MAPPO fallback, whole community switches (proposed)": [
+   {
+    "seed": 0,
+    "cost": 114.33128472867524,
+    "unserved": 7.599592208862305e-07,
+    "shortfall": 0.0,
+    "ir": 1.0,
+    "modes": {
+     "central": 1.0,
+     "local": 0.0,
+     "rule": 0.0,
+     "stale": 0.0
+    }
+   },
+   {
+    "seed": 1,
+    "cost": 113.4646645507477,
+    "unserved": 6.61611557006836e-06,
+    "shortfall": 0.0,
+    "ir": 1.0,
+    "modes": {
+     "central": 1.0,
+     "local": 0.0,
+     "rule": 0.0,
+     "stale": 0.0
+    }
+   },
+   {
+    "seed": 2,
+    "cost": 108.2083209892527,
+    "unserved": 1.1414289474487305e-05,
+    "shortfall": 0.0,
+    "ir": 1.0,
+    "modes": {
+     "central": 1.0,
+     "local": 0.0,
+     "rule": 0.0,
+     "stale": 0.0
+    }
+   }
+  ],
+  "  same, WITHOUT fallback envelope (ablation)": [
+   {
+    "seed": 0,
+    "cost": 114.33128472867524,
+    "unserved": 7.599592208862305e-07,
+    "shortfall": 0.0,
+    "ir": 1.0,
+    "modes": {
+     "central": 1.0,
+     "local": 0.0,
+     "rule": 0.0,
+     "stale": 0.0
+    }
+   },
+   {
+    "seed": 1,
+    "cost": 113.4646645507477,
+    "unserved": 6.61611557006836e-06,
+    "shortfall": 0.0,
+    "ir": 1.0,
+    "modes": {
+     "central": 1.0,
+     "local": 0.0,
+     "rule": 0.0,
+     "stale": 0.0
+    }
+   },
+   {
+    "seed": 2,
+    "cost": 108.2083209892527,
+    "unserved": 1.1414289474487305e-05,
+    "shortfall": 0.0,
+    "ir": 1.0,
+    "modes": {
+     "central": 1.0,
+     "local": 0.0,
+     "rule": 0.0,
+     "stale": 0.0
+    }
+   }
+  ],
+  "MAPPO student everywhere": [
+   {
+    "seed": 0,
+    "cost": 117.90920439141621,
+    "unserved": 5.248934030532836e-06,
+    "shortfall": 0.0,
+    "ir": 0.9599999785423279,
+    "modes": {
+     "central": 1.0,
+     "local": 0.0,
+     "rule": 0.0,
+     "stale": 0.0
+    }
+   },
+   {
+    "seed": 1,
+    "cost": 115.1641039519003,
+    "unserved": 0.0,
+    "shortfall": 0.0,
+    "ir": 1.0,
+    "modes": {
+     "central": 1.0,
+     "local": 0.0,
+     "rule": 0.0,
+     "stale": 0.0
+    }
+   },
+   {
+    "seed": 2,
+    "cost": 115.09261048217364,
+    "unserved": 2.652406692504883e-06,
+    "shortfall": 0.0,
+    "ir": 1.0,
+    "modes": {
+     "central": 1.0,
+     "local": 0.0,
+     "rule": 0.0,
+     "stale": 0.0
+    }
+   }
+  ],
+  "Rule controller everywhere": [
+   {
+    "seed": 0,
+    "cost": 143.90489869504412,
+    "unserved": 0.0,
+    "shortfall": 0.0,
+    "ir": 1.0,
+    "modes": {
+     "central": 1.0,
+     "local": 0.0,
+     "rule": 0.0,
+     "stale": 0.0
+    }
+   }
+  ]
+ },
+ "evening": {
+  "MAT, no fallback (hold last setpoint)": [
+   {
+    "seed": 0,
+    "cost": 127.65979488193913,
+    "unserved": 7.599592208862305e-07,
+    "shortfall": 0.0,
+    "ir": 1.0,
+    "modes": {
+     "central": 0.8333333333333334,
+     "local": 0.0,
+     "rule": 0.0,
+     "stale": 0.16666666666666666
+    }
+   },
+   {
+    "seed": 1,
+    "cost": 126.74377957003828,
+    "unserved": 6.61611557006836e-06,
+    "shortfall": 0.0,
+    "ir": 0.9200000166893005,
+    "modes": {
+     "central": 0.8333333333333334,
+     "local": 0.0,
+     "rule": 0.0,
+     "stale": 0.16666666666666666
+    }
+   },
+   {
+    "seed": 2,
+    "cost": 127.57188740015826,
+    "unserved": 1.1414289474487305e-05,
+    "shortfall": 0.0,
+    "ir": 0.8799999952316284,
+    "modes": {
+     "central": 0.8333333333333334,
+     "local": 0.0,
+     "rule": 0.0,
+     "stale": 0.16666666666666666
+    }
+   }
+  ],
+  "MAT + rule fallback": [
+   {
+    "seed": 0,
+    "cost": 126.4513780754494,
+    "unserved": 7.599592208862305e-07,
+    "shortfall": 0.0,
+    "ir": 1.0,
+    "modes": {
+     "central": 0.8333333333333334,
+     "local": 0.0,
+     "rule": 0.16666666666666666,
+     "stale": 0.0
+    }
+   },
+   {
+    "seed": 1,
+    "cost": 127.9274591322311,
+    "unserved": 6.61611557006836e-06,
+    "shortfall": 0.0,
+    "ir": 0.9200000166893005,
+    "modes": {
+     "central": 0.8333333333333334,
+     "local": 0.0,
+     "rule": 0.16666666666666666,
+     "stale": 0.0
+    }
+   },
+   {
+    "seed": 2,
+    "cost": 126.43348526160982,
+    "unserved": 1.1414289474487305e-05,
+    "shortfall": 0.0,
+    "ir": 0.9200000166893005,
+    "modes": {
+     "central": 0.8333333333333334,
+     "local": 0.0,
+     "rule": 0.16666666666666666,
+     "stale": 0.0
+    }
+   }
+  ],
+  "MAT + MAPPO fallback, offline households only": [
+   {
+    "seed": 0,
+    "cost": 114.78132625329582,
+    "unserved": 7.599592208862305e-07,
+    "shortfall": 0.0,
+    "ir": 1.0,
+    "modes": {
+     "central": 0.8333333333333334,
+     "local": 0.16666666666666666,
+     "rule": 0.0,
+     "stale": 0.0
+    }
+   },
+   {
+    "seed": 1,
+    "cost": 112.93243461216349,
+    "unserved": 6.61611557006836e-06,
+    "shortfall": 0.0,
+    "ir": 0.9599999785423279,
+    "modes": {
+     "central": 0.8333333333333334,
+     "local": 0.16666666666666666,
+     "rule": 0.0,
+     "stale": 0.0
+    }
+   },
+   {
+    "seed": 2,
+    "cost": 109.5824356459315,
+    "unserved": 1.1414289474487305e-05,
+    "shortfall": 0.0,
+    "ir": 1.0,
+    "modes": {
+     "central": 0.8333333333333334,
+     "local": 0.16666666666666666,
+     "rule": 0.0,
+     "stale": 0.0
+    }
+   }
+  ],
+  "MAT + MAPPO fallback, whole community switches (proposed)": [
+   {
+    "seed": 0,
+    "cost": 114.78132625329582,
+    "unserved": 7.599592208862305e-07,
+    "shortfall": 0.0,
+    "ir": 1.0,
+    "modes": {
+     "central": 0.8333333333333334,
+     "local": 0.16666666666666666,
+     "rule": 0.0,
+     "stale": 0.0
+    }
+   },
+   {
+    "seed": 1,
+    "cost": 112.93243461216349,
+    "unserved": 6.61611557006836e-06,
+    "shortfall": 0.0,
+    "ir": 0.9599999785423279,
+    "modes": {
+     "central": 0.8333333333333334,
+     "local": 0.16666666666666666,
+     "rule": 0.0,
+     "stale": 0.0
+    }
+   },
+   {
+    "seed": 2,
+    "cost": 109.5824356459315,
+    "unserved": 1.1414289474487305e-05,
+    "shortfall": 0.0,
+    "ir": 1.0,
+    "modes": {
+     "central": 0.8333333333333334,
+     "local": 0.16666666666666666,
+     "rule": 0.0,
+     "stale": 0.0
+    }
+   }
+  ],
+  "  same, WITHOUT fallback envelope (ablation)": [
+   {
+    "seed": 0,
+    "cost": 114.78132625329582,
+    "unserved": 7.599592208862305e-07,
+    "shortfall": 0.0,
+    "ir": 1.0,
+    "modes": {
+     "central": 0.8333333333333334,
+     "local": 0.16666666666666666,
+     "rule": 0.0,
+     "stale": 0.0
+    }
+   },
+   {
+    "seed": 1,
+    "cost": 112.96800282235341,
+    "unserved": 6.61611557006836e-06,
+    "shortfall": 0.0,
+    "ir": 0.9599999785423279,
+    "modes": {
+     "central": 0.8333333333333334,
+     "local": 0.16666666666666666,
+     "rule": 0.0,
+     "stale": 0.0
+    }
+   },
+   {
+    "seed": 2,
+    "cost": 109.5824356459315,
+    "unserved": 1.1414289474487305e-05,
+    "shortfall": 0.0,
+    "ir": 1.0,
+    "modes": {
+     "central": 0.8333333333333334,
+     "local": 0.16666666666666666,
+     "rule": 0.0,
+     "stale": 0.0
+    }
+   }
+  ],
+  "MAPPO student everywhere": [
+   {
+    "seed": 0,
+    "cost": 117.90920439141621,
+    "unserved": 5.248934030532836e-06,
+    "shortfall": 0.0,
+    "ir": 0.9599999785423279,
+    "modes": {
+     "central": 0.8333333333333334,
+     "local": 0.16666666666666666,
+     "rule": 0.0,
+     "stale": 0.0
+    }
+   },
+   {
+    "seed": 1,
+    "cost": 115.05466528264418,
+    "unserved": 0.0,
+    "shortfall": 0.0,
+    "ir": 1.0,
+    "modes": {
+     "central": 0.8333333333333334,
+     "local": 0.16666666666666666,
+     "rule": 0.0,
+     "stale": 0.0
+    }
+   },
+   {
+    "seed": 2,
+    "cost": 115.09261048217364,
+    "unserved": 2.652406692504883e-06,
+    "shortfall": 0.0,
+    "ir": 1.0,
+    "modes": {
+     "central": 0.8333333333333334,
+     "local": 0.16666666666666666,
+     "rule": 0.0,
+     "stale": 0.0
+    }
+   }
+  ],
+  "Rule controller everywhere": [
+   {
+    "seed": 0,
+    "cost": 143.90489869504412,
+    "unserved": 0.0,
+    "shortfall": 0.0,
+    "ir": 1.0,
+    "modes": {
+     "central": 0.8333333333333334,
+     "local": 0.0,
+     "rule": 0.16666666666666666,
+     "stale": 0.0
+    }
+   }
+  ]
+ },
+ "one": {
+  "MAT, no fallback (hold last setpoint)": [
+   {
+    "seed": 0,
+    "cost": 124.63164716235936,
+    "unserved": 0.0,
+    "shortfall": 0.0,
+    "ir": 0.9599999785423279,
+    "modes": {
+     "central": 0.96,
+     "local": 0.0,
+     "rule": 0.0,
+     "stale": 0.04
+    }
+   },
+   {
+    "seed": 1,
+    "cost": 122.55592037379235,
+    "unserved": 0.0,
+    "shortfall": 0.0,
+    "ir": 0.9200000166893005,
+    "modes": {
+     "central": 0.96,
+     "local": 0.0,
+     "rule": 0.0,
+     "stale": 0.04
+    }
+   },
+   {
+    "seed": 2,
+    "cost": 121.10881102015135,
+    "unserved": 0.0,
+    "shortfall": 0.0,
+    "ir": 0.8799999952316284,
+    "modes": {
+     "central": 0.96,
+     "local": 0.0,
+     "rule": 0.0,
+     "stale": 0.04
+    }
+   }
+  ],
+  "MAT + rule fallback": [
+   {
+    "seed": 0,
+    "cost": 121.1587155351574,
+    "unserved": 0.0,
+    "shortfall": 0.0,
+    "ir": 1.0,
+    "modes": {
+     "central": 0.96,
+     "local": 0.0,
+     "rule": 0.04,
+     "stale": 0.0
+    }
+   },
+   {
+    "seed": 1,
+    "cost": 121.18210572551193,
+    "unserved": 5.532056093215942e-07,
+    "shortfall": 0.0,
+    "ir": 0.9599999785423279,
+    "modes": {
+     "central": 0.96,
+     "local": 0.0,
+     "rule": 0.04,
+     "stale": 0.0
+    }
+   },
+   {
+    "seed": 2,
+    "cost": 117.96879785319405,
+    "unserved": 0.0,
+    "shortfall": 0.0,
+    "ir": 1.0,
+    "modes": {
+     "central": 0.96,
+     "local": 0.0,
+     "rule": 0.04,
+     "stale": 0.0
+    }
+   }
+  ],
+  "MAT + MAPPO fallback, offline households only": [
+   {
+    "seed": 0,
+    "cost": 119.82373990508455,
+    "unserved": 0.0,
+    "shortfall": 0.0,
+    "ir": 1.0,
+    "modes": {
+     "central": 0.96,
+     "local": 0.04,
+     "rule": 0.0,
+     "stale": 0.0
+    }
+   },
+   {
+    "seed": 1,
+    "cost": 120.8593066297337,
+    "unserved": 1.385807991027832e-06,
+    "shortfall": 0.0,
+    "ir": 0.9599999785423279,
+    "modes": {
+     "central": 0.96,
+     "local": 0.04,
+     "rule": 0.0,
+     "stale": 0.0
+    }
+   },
+   {
+    "seed": 2,
+    "cost": 117.0450539324399,
+    "unserved": 5.245208740234375e-06,
+    "shortfall": 0.0,
+    "ir": 1.0,
+    "modes": {
+     "central": 0.96,
+     "local": 0.04,
+     "rule": 0.0,
+     "stale": 0.0
+    }
+   }
+  ],
+  "MAT + MAPPO fallback, whole community switches (proposed)": [
+   {
+    "seed": 0,
+    "cost": 118.24514044155576,
+    "unserved": 1.2703239917755125e-06,
+    "shortfall": 0.0,
+    "ir": 0.9599999785423279,
+    "modes": {
+     "central": 0.0,
+     "local": 1.0,
+     "rule": 0.0,
+     "stale": 0.0
+    }
+   },
+   {
+    "seed": 1,
+    "cost": 117.31034823065814,
+    "unserved": 2.086162567138672e-07,
+    "shortfall": 0.0,
+    "ir": 1.0,
+    "modes": {
+     "central": 0.0,
+     "local": 1.0,
+     "rule": 0.0,
+     "stale": 0.0
+    }
+   },
+   {
+    "seed": 2,
+    "cost": 116.39401737273313,
+    "unserved": 3.680586814880371e-06,
+    "shortfall": 0.0,
+    "ir": 1.0,
+    "modes": {
+     "central": 0.0,
+     "local": 1.0,
+     "rule": 0.0,
+     "stale": 0.0
+    }
+   }
+  ],
+  "  same, WITHOUT fallback envelope (ablation)": [
+   {
+    "seed": 0,
+    "cost": 117.90920439141621,
+    "unserved": 5.248934030532836e-06,
+    "shortfall": 0.0,
+    "ir": 0.9599999785423279,
+    "modes": {
+     "central": 0.0,
+     "local": 1.0,
+     "rule": 0.0,
+     "stale": 0.0
+    }
+   },
+   {
+    "seed": 1,
+    "cost": 115.1641039519003,
+    "unserved": 0.0,
+    "shortfall": 0.0,
+    "ir": 1.0,
+    "modes": {
+     "central": 0.0,
+     "local": 1.0,
+     "rule": 0.0,
+     "stale": 0.0
+    }
+   },
+   {
+    "seed": 2,
+    "cost": 115.09261048217364,
+    "unserved": 2.652406692504883e-06,
+    "shortfall": 0.0,
+    "ir": 1.0,
+    "modes": {
+     "central": 0.0,
+     "local": 1.0,
+     "rule": 0.0,
+     "stale": 0.0
+    }
+   }
+  ],
+  "MAPPO student everywhere": [
+   {
+    "seed": 0,
+    "cost": 118.24514044155576,
+    "unserved": 1.2703239917755125e-06,
+    "shortfall": 0.0,
+    "ir": 0.9599999785423279,
+    "modes": {
+     "central": 0.96,
+     "local": 0.04,
+     "rule": 0.0,
+     "stale": 0.0
+    }
+   },
+   {
+    "seed": 1,
+    "cost": 117.31034823065814,
+    "unserved": 2.086162567138672e-07,
+    "shortfall": 0.0,
+    "ir": 1.0,
+    "modes": {
+     "central": 0.96,
+     "local": 0.04,
+     "rule": 0.0,
+     "stale": 0.0
+    }
+   },
+   {
+    "seed": 2,
+    "cost": 116.39401737273313,
+    "unserved": 3.680586814880371e-06,
+    "shortfall": 0.0,
+    "ir": 1.0,
+    "modes": {
+     "central": 0.96,
+     "local": 0.04,
+     "rule": 0.0,
+     "stale": 0.0
+    }
+   }
+  ],
+  "Rule controller everywhere": [
+   {
+    "seed": 0,
+    "cost": 143.90533516205767,
+    "unserved": 0.0,
+    "shortfall": 0.0,
+    "ir": 1.0,
+    "modes": {
+     "central": 0.96,
+     "local": 0.0,
+     "rule": 0.04,
+     "stale": 0.0
+    }
+   }
+  ]
+ },
+ "partial": {
+  "MAT, no fallback (hold last setpoint)": [
+   {
+    "seed": 0,
+    "cost": 149.15002156487375,
+    "unserved": 0.0,
+    "shortfall": 0.0,
+    "ir": 0.8799999952316284,
+    "modes": {
+     "central": 0.68,
+     "local": 0.0,
+     "rule": 0.0,
+     "stale": 0.32
+    }
+   },
+   {
+    "seed": 1,
+    "cost": 144.82190694299706,
+    "unserved": 0.0,
+    "shortfall": 0.0,
+    "ir": 0.9200000166893005,
+    "modes": {
+     "central": 0.68,
+     "local": 0.0,
+     "rule": 0.0,
+     "stale": 0.32
+    }
+   },
+   {
+    "seed": 2,
+    "cost": 172.4863547769037,
+    "unserved": 0.0,
+    "shortfall": 0.0,
+    "ir": 0.7599999904632568,
+    "modes": {
+     "central": 0.68,
+     "local": 0.0,
+     "rule": 0.0,
+     "stale": 0.32
+    }
+   }
+  ],
+  "MAT + rule fallback": [
+   {
+    "seed": 0,
+    "cost": 134.763133953374,
+    "unserved": 0.0,
+    "shortfall": 0.0,
+    "ir": 0.9599999785423279,
+    "modes": {
+     "central": 0.68,
+     "local": 0.0,
+     "rule": 0.32,
+     "stale": 0.0
+    }
+   },
+   {
+    "seed": 1,
+    "cost": 135.12448482715362,
+    "unserved": 0.0,
+    "shortfall": 0.0,
+    "ir": 0.9599999785423279,
+    "modes": {
+     "central": 0.68,
+     "local": 0.0,
+     "rule": 0.32,
+     "stale": 0.0
+    }
+   },
+   {
+    "seed": 2,
+    "cost": 163.12835420408624,
+    "unserved": 0.0,
+    "shortfall": 0.0,
+    "ir": 0.6800000071525574,
+    "modes": {
+     "central": 0.68,
+     "local": 0.0,
+     "rule": 0.32,
+     "stale": 0.0
+    }
+   }
+  ],
+  "MAT + MAPPO fallback, offline households only": [
+   {
+    "seed": 0,
+    "cost": 123.42962610050833,
+    "unserved": 0.0,
+    "shortfall": 0.0,
+    "ir": 1.0,
+    "modes": {
+     "central": 0.68,
+     "local": 0.32,
+     "rule": 0.0,
+     "stale": 0.0
+    }
+   },
+   {
+    "seed": 1,
+    "cost": 129.00547753028297,
+    "unserved": 0.0,
+    "shortfall": 0.0,
+    "ir": 0.9200000166893005,
+    "modes": {
+     "central": 0.68,
+     "local": 0.32,
+     "rule": 0.0,
+     "stale": 0.0
+    }
+   },
+   {
+    "seed": 2,
+    "cost": 158.7531826612265,
+    "unserved": 0.0,
+    "shortfall": 0.0,
+    "ir": 0.6800000071525574,
+    "modes": {
+     "central": 0.68,
+     "local": 0.32,
+     "rule": 0.0,
+     "stale": 0.0
+    }
+   }
+  ],
+  "MAT + MAPPO fallback, whole community switches (proposed)": [
+   {
+    "seed": 0,
+    "cost": 119.48139125557748,
+    "unserved": 0.0,
+    "shortfall": 0.0,
+    "ir": 1.0,
+    "modes": {
+     "central": 0.0,
+     "local": 1.0,
+     "rule": 0.0,
+     "stale": 0.0
+    }
+   },
+   {
+    "seed": 1,
+    "cost": 120.53593579101543,
+    "unserved": 0.0,
+    "shortfall": 0.0,
+    "ir": 1.0,
+    "modes": {
+     "central": 0.0,
+     "local": 1.0,
+     "rule": 0.0,
+     "stale": 0.0
+    }
+   },
+   {
+    "seed": 2,
+    "cost": 115.79827619123456,
+    "unserved": 0.0,
+    "shortfall": 0.0,
+    "ir": 1.0,
+    "modes": {
+     "central": 0.0,
+     "local": 1.0,
+     "rule": 0.0,
+     "stale": 0.0
+    }
+   }
+  ],
+  "  same, WITHOUT fallback envelope (ablation)": [
+   {
+    "seed": 0,
+    "cost": 117.90920439141621,
+    "unserved": 5.248934030532836e-06,
+    "shortfall": 0.0,
+    "ir": 0.9599999785423279,
+    "modes": {
+     "central": 0.0,
+     "local": 1.0,
+     "rule": 0.0,
+     "stale": 0.0
+    }
+   },
+   {
+    "seed": 1,
+    "cost": 115.1641039519003,
+    "unserved": 0.0,
+    "shortfall": 0.0,
+    "ir": 1.0,
+    "modes": {
+     "central": 0.0,
+     "local": 1.0,
+     "rule": 0.0,
+     "stale": 0.0
+    }
+   },
+   {
+    "seed": 2,
+    "cost": 115.09261048217364,
+    "unserved": 2.652406692504883e-06,
+    "shortfall": 0.0,
+    "ir": 1.0,
+    "modes": {
+     "central": 0.0,
+     "local": 1.0,
+     "rule": 0.0,
+     "stale": 0.0
+    }
+   }
+  ],
+  "MAPPO student everywhere": [
+   {
+    "seed": 0,
+    "cost": 119.48139125557748,
+    "unserved": 0.0,
+    "shortfall": 0.0,
+    "ir": 1.0,
+    "modes": {
+     "central": 0.68,
+     "local": 0.32,
+     "rule": 0.0,
+     "stale": 0.0
+    }
+   },
+   {
+    "seed": 1,
+    "cost": 120.53593579101543,
+    "unserved": 0.0,
+    "shortfall": 0.0,
+    "ir": 1.0,
+    "modes": {
+     "central": 0.68,
+     "local": 0.32,
+     "rule": 0.0,
+     "stale": 0.0
+    }
+   },
+   {
+    "seed": 2,
+    "cost": 115.79827619123456,
+    "unserved": 0.0,
+    "shortfall": 0.0,
+    "ir": 1.0,
+    "modes": {
+     "central": 0.68,
+     "local": 0.32,
+     "rule": 0.0,
+     "stale": 0.0
+    }
+   }
+  ],
+  "Rule controller everywhere": [
+   {
+    "seed": 0,
+    "cost": 143.9035663056835,
+    "unserved": 0.0,
+    "shortfall": 0.0,
+    "ir": 1.0,
+    "modes": {
+     "central": 0.68,
+     "local": 0.0,
+     "rule": 0.32,
+     "stale": 0.0
+    }
+   }
+  ]
+ },
+ "full": {
+  "MAT, no fallback (hold last setpoint)": [
+   {
+    "seed": 0,
+    "cost": 173.83694283838744,
+    "unserved": 5.364418029785156e-06,
+    "shortfall": 0.0,
+    "ir": 0.6800000071525574,
+    "modes": {
+     "central": 0.0,
+     "local": 0.0,
+     "rule": 0.0,
+     "stale": 1.0
+    }
+   },
+   {
+    "seed": 1,
+    "cost": 173.83694283838744,
+    "unserved": 5.364418029785156e-06,
+    "shortfall": 0.0,
+    "ir": 0.6800000071525574,
+    "modes": {
+     "central": 0.0,
+     "local": 0.0,
+     "rule": 0.0,
+     "stale": 1.0
+    }
+   },
+   {
+    "seed": 2,
+    "cost": 173.83694283838744,
+    "unserved": 5.364418029785156e-06,
+    "shortfall": 0.0,
+    "ir": 0.6800000071525574,
+    "modes": {
+     "central": 0.0,
+     "local": 0.0,
+     "rule": 0.0,
+     "stale": 1.0
+    }
+   }
+  ],
+  "MAT + rule fallback": [
+   {
+    "seed": 0,
+    "cost": 143.8612012177706,
+    "unserved": 0.0,
+    "shortfall": 0.0,
+    "ir": 1.0,
+    "modes": {
+     "central": 0.0,
+     "local": 0.0,
+     "rule": 1.0,
+     "stale": 0.0
+    }
+   },
+   {
+    "seed": 1,
+    "cost": 143.8612012177706,
+    "unserved": 0.0,
+    "shortfall": 0.0,
+    "ir": 1.0,
+    "modes": {
+     "central": 0.0,
+     "local": 0.0,
+     "rule": 1.0,
+     "stale": 0.0
+    }
+   },
+   {
+    "seed": 2,
+    "cost": 143.8612012177706,
+    "unserved": 0.0,
+    "shortfall": 0.0,
+    "ir": 1.0,
+    "modes": {
+     "central": 0.0,
+     "local": 0.0,
+     "rule": 1.0,
+     "stale": 0.0
+    }
+   }
+  ],
+  "MAT + MAPPO fallback, offline households only": [
+   {
+    "seed": 0,
+    "cost": 125.30463034477305,
+    "unserved": 0.0,
+    "shortfall": 0.0,
+    "ir": 1.0,
+    "modes": {
+     "central": 0.0,
+     "local": 1.0,
+     "rule": 0.0,
+     "stale": 0.0
+    }
+   },
+   {
+    "seed": 1,
+    "cost": 124.80645007004543,
+    "unserved": 0.0,
+    "shortfall": 0.0,
+    "ir": 1.0,
+    "modes": {
+     "central": 0.0,
+     "local": 1.0,
+     "rule": 0.0,
+     "stale": 0.0
+    }
+   },
+   {
+    "seed": 2,
+    "cost": 120.53942136099586,
+    "unserved": 0.0,
+    "shortfall": 0.0,
+    "ir": 1.0,
+    "modes": {
+     "central": 0.0,
+     "local": 1.0,
+     "rule": 0.0,
+     "stale": 0.0
+    }
+   }
+  ],
+  "MAT + MAPPO fallback, whole community switches (proposed)": [
+   {
+    "seed": 0,
+    "cost": 125.30463034477305,
+    "unserved": 0.0,
+    "shortfall": 0.0,
+    "ir": 1.0,
+    "modes": {
+     "central": 0.0,
+     "local": 1.0,
+     "rule": 0.0,
+     "stale": 0.0
+    }
+   },
+   {
+    "seed": 1,
+    "cost": 124.80645007004543,
+    "unserved": 0.0,
+    "shortfall": 0.0,
+    "ir": 1.0,
+    "modes": {
+     "central": 0.0,
+     "local": 1.0,
+     "rule": 0.0,
+     "stale": 0.0
+    }
+   },
+   {
+    "seed": 2,
+    "cost": 120.53942136099586,
+    "unserved": 0.0,
+    "shortfall": 0.0,
+    "ir": 1.0,
+    "modes": {
+     "central": 0.0,
+     "local": 1.0,
+     "rule": 0.0,
+     "stale": 0.0
+    }
+   }
+  ],
+  "  same, WITHOUT fallback envelope (ablation)": [
+   {
+    "seed": 0,
+    "cost": 117.90920439141621,
+    "unserved": 5.248934030532836e-06,
+    "shortfall": 0.0,
+    "ir": 0.9599999785423279,
+    "modes": {
+     "central": 0.0,
+     "local": 1.0,
+     "rule": 0.0,
+     "stale": 0.0
+    }
+   },
+   {
+    "seed": 1,
+    "cost": 115.1641039519003,
+    "unserved": 0.0,
+    "shortfall": 0.0,
+    "ir": 1.0,
+    "modes": {
+     "central": 0.0,
+     "local": 1.0,
+     "rule": 0.0,
+     "stale": 0.0
+    }
+   },
+   {
+    "seed": 2,
+    "cost": 115.09261048217364,
+    "unserved": 2.652406692504883e-06,
+    "shortfall": 0.0,
+    "ir": 1.0,
+    "modes": {
+     "central": 0.0,
+     "local": 1.0,
+     "rule": 0.0,
+     "stale": 0.0
+    }
+   }
+  ],
+  "MAPPO student everywhere": [
+   {
+    "seed": 0,
+    "cost": 125.30463034477305,
+    "unserved": 0.0,
+    "shortfall": 0.0,
+    "ir": 1.0,
+    "modes": {
+     "central": 0.0,
+     "local": 1.0,
+     "rule": 0.0,
+     "stale": 0.0
+    }
+   },
+   {
+    "seed": 1,
+    "cost": 124.80645007004543,
+    "unserved": 0.0,
+    "shortfall": 0.0,
+    "ir": 1.0,
+    "modes": {
+     "central": 0.0,
+     "local": 1.0,
+     "rule": 0.0,
+     "stale": 0.0
+    }
+   },
+   {
+    "seed": 2,
+    "cost": 120.53942136099586,
+    "unserved": 0.0,
+    "shortfall": 0.0,
+    "ir": 1.0,
+    "modes": {
+     "central": 0.0,
+     "local": 1.0,
+     "rule": 0.0,
+     "stale": 0.0
+    }
+   }
+  ],
+  "Rule controller everywhere": [
+   {
+    "seed": 0,
+    "cost": 143.8612012177706,
+    "unserved": 0.0,
+    "shortfall": 0.0,
+    "ir": 1.0,
+    "modes": {
+     "central": 0.0,
+     "local": 0.0,
+     "rule": 1.0,
+     "stale": 0.0
+    }
+   }
+  ]
+ },
+ "_noisy_days_proposed": {
+  "none": [
+   {
+    "seed": 0,
+    "cost_mean": 114.75376891105897,
+    "unserved_max": 2.551823854446411e-06,
+    "shortfall_max": 0.0
+   },
+   {
+    "seed": 1,
+    "cost_mean": 113.70400462925484,
+    "unserved_max": 2.205371856689453e-06,
+    "shortfall_max": 0.0
+   },
+   {
+    "seed": 2,
+    "cost_mean": 108.80596527464678,
+    "unserved_max": 1.290440559387207e-05,
+    "shortfall_max": 0.0
+   }
+  ],
+  "evening": [
+   {
+    "seed": 0,
+    "cost_mean": 115.72151905954424,
+    "unserved_max": 2.551823854446411e-06,
+    "shortfall_max": 0.0
+   },
+   {
+    "seed": 1,
+    "cost_mean": 113.13894341947454,
+    "unserved_max": 2.205371856689453e-06,
+    "shortfall_max": 0.0
+   },
+   {
+    "seed": 2,
+    "cost_mean": 109.99015632281683,
+    "unserved_max": 1.290440559387207e-05,
+    "shortfall_max": 0.0
+   }
+  ],
+  "one": [
+   {
+    "seed": 0,
+    "cost_mean": 118.46300435726027,
+    "unserved_max": 5.036592483520508e-06,
+    "shortfall_max": 0.0
+   },
+   {
+    "seed": 1,
+    "cost_mean": 116.57417161061396,
+    "unserved_max": 3.2186508178710938e-06,
+    "shortfall_max": 0.0
+   },
+   {
+    "seed": 2,
+    "cost_mean": 115.83960487293005,
+    "unserved_max": 2.175569534301758e-06,
+    "shortfall_max": 0.0
+   }
+  ],
+  "partial": [
+   {
+    "seed": 0,
+    "cost_mean": 119.70450101847183,
+    "unserved_max": 4.082918167114258e-06,
+    "shortfall_max": 0.0
+   },
+   {
+    "seed": 1,
+    "cost_mean": 120.77087278984723,
+    "unserved_max": 7.152557373046874e-07,
+    "shortfall_max": 0.0
+   },
+   {
+    "seed": 2,
+    "cost_mean": 115.93155923355232,
+    "unserved_max": 0.0,
+    "shortfall_max": 0.0
+   }
+  ],
+  "full": [
+   {
+    "seed": 0,
+    "cost_mean": 125.70020246690913,
+    "unserved_max": 0.0,
+    "shortfall_max": 0.0
+   },
+   {
+    "seed": 1,
+    "cost_mean": 125.18094747319341,
+    "unserved_max": 0.0,
+    "shortfall_max": 0.0
+   },
+   {
+    "seed": 2,
+    "cost_mean": 119.74541838597676,
+    "unserved_max": 0.0,
+    "shortfall_max": 0.0
+   }
+  ]
+ }
+}

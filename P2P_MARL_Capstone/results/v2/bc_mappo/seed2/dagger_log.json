@@ -1,0 +1,31 @@
+[
+ {
+  "test": {
+   "net_cost_eur": 155.90089616056858,
+   "net_cost_inv_neutral_eur": 157.53574320551334,
+   "unserved_kwh": 6.4373016357421875e-06,
+   "ev_shortfall_kwh": 0.0,
+   "individual_rationality": 0.7200000286102295,
+   "fairness_jain": 0.9929130673408508,
+   "p2p_volume_kwh": 281.4024625234306,
+   "bess_drawdown_kwh": 14.944668769836426,
+   "unserved_max": 6.4373016357421875e-06,
+   "shortfall_max": 0.0
+  },
+  "val": {
+   "net_cost_eur": 165.3541136304422,
+   "net_cost_inv_neutral_eur": 167.76797590353925,
+   "unserved_kwh": 3.7550926208496094e-06,
+   "ev_shortfall_kwh": 0.0,
+   "individual_rationality": 0.6350000090897083,
+   "fairness_jain": 0.9902483373880386,
+   "p2p_volume_kwh": 270.79319097520784,
+   "bess_drawdown_kwh": 22.05294179916382,
+   "unserved_max": 1.0773539543151855e-05,
+   "shortfall_max": 0.0
+  },
+  "iter": 0,
+  "minutes": 0.9208332141240437,
+  "dagger_states": 0
+ }
+]

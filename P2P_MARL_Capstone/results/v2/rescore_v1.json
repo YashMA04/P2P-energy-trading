@@ -1,0 +1,104 @@
+{
+ "no_flexibility": {
+  "raw": 175.88920211099796,
+  "inv_neutral": 175.88920211099796,
+  "drawdown": 0.0,
+  "recovered_pct": 0.0,
+  "unserved": 1.0654330253601074e-06
+ },
+ "deadline_charging": {
+  "raw": 208.93017200506065,
+  "inv_neutral": 208.93017200506065,
+  "drawdown": 0.0,
+  "recovered_pct": -42.827363998227746,
+  "unserved": 103.52050118148327
+ },
+ "greedy_self_consumption": {
+  "raw": 199.78602299176666,
+  "inv_neutral": 206.98516163312408,
+  "drawdown": 65.76000213623047,
+  "recovered_pct": -40.30626163814767,
+  "unserved": 0.0
+ },
+ "tariff_aware_p2p": {
+  "raw": 149.61154523323552,
+  "inv_neutral": 153.34602179955021,
+  "drawdown": 34.154014587402344,
+  "recovered_pct": 29.22023754059177,
+  "unserved": 28.727258026599884
+ },
+ "mappo_s0_best": {
+  "raw": 141.40492734925164,
+  "inv_neutral": 148.60406599060906,
+  "drawdown": 65.76000213623047,
+  "recovered_pct": 35.366711695078585,
+  "unserved": 0.0
+ },
+ "mappo_s0_final": {
+  "raw": 195.02257640273194,
+  "inv_neutral": 202.22171504408936,
+  "drawdown": 65.76000213623047,
+  "recovered_pct": -34.131931356415684,
+  "unserved": 111.01249188184738
+ },
+ "mappo_s1_best": {
+  "raw": 145.41246382186978,
+  "inv_neutral": 152.6116024632272,
+  "drawdown": 65.76000213623047,
+  "recovered_pct": 30.172184300777364,
+  "unserved": 0.0
+ },
+ "mappo_s1_final": {
+  "raw": 155.30186577073636,
+  "inv_neutral": 162.50100441209378,
+  "drawdown": 65.76000213623047,
+  "recovered_pct": 17.35364361184319,
+  "unserved": 24.70118243992329
+ },
+ "mappo_s2_best": {
+  "raw": 140.97144318519435,
+  "inv_neutral": 148.17058182655177,
+  "drawdown": 65.76000213623047,
+  "recovered_pct": 35.928589392406266,
+  "unserved": 0.0
+ },
+ "mappo_s2_final": {
+  "raw": 172.50724155892172,
+  "inv_neutral": 179.70638020027914,
+  "drawdown": 65.76000213623047,
+  "recovered_pct": -4.947786823445558,
+  "unserved": 68.89588397741318
+ },
+ "mappo_s3_best": {
+  "raw": 146.70876316449542,
+  "inv_neutral": 153.90790180585284,
+  "drawdown": 65.76000213623047,
+  "recovered_pct": 28.49193447835106,
+  "unserved": 2.6300549507141113e-06
+ },
+ "mappo_s3_final": {
+  "raw": 147.08293389251858,
+  "inv_neutral": 154.282072533876,
+  "drawdown": 65.76000213623047,
+  "recovered_pct": 28.00693824434494,
+  "unserved": 2.0988941341638565
+ },
+ "mappo_s4_best": {
+  "raw": 145.833346126639,
+  "inv_neutral": 153.0324847679964,
+  "drawdown": 65.76000213623047,
+  "recovered_pct": 29.626641003333088,
+  "unserved": 0.4164535403251648
+ },
+ "mappo_s4_final": {
+  "raw": 161.21506005959856,
+  "inv_neutral": 168.41419870095598,
+  "drawdown": 65.76000213623047,
+  "recovered_pct": 9.689022233799138,
+  "unserved": 33.30725908279419
+ },
+ "_bounds": {
+  "grid_only": 175.88920211099796,
+  "exact_battery_neutral": 98.739999336272
+ }
+}

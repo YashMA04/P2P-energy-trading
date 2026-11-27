@@ -1,0 +1,28 @@
+[
+ {
+  "config": "legacy",
+  "value_loss": 6.388582706451416,
+  "return_mean": 1.9465522766113281,
+  "actor_grad_norm": 0.3765968978404999,
+  "critic_grad_norm": 21.20589256286621,
+  "joint_grad_norm": 21.20923630429176,
+  "clip_rescale_factor": 0.023574634787713846,
+  "effective_actor_lr": 7.072390436314153e-06,
+  "reward_std_across_agents": 1.415992301190272e-08,
+  "reward_std_across_time": 1.5070703029632568,
+  "distinct_advantages_per_step": 1
+ },
+ {
+  "config": "fixed",
+  "value_loss": 0.07433846592903137,
+  "return_mean": -10.233955383300781,
+  "actor_grad_norm": 0.3307080864906311,
+  "critic_grad_norm": 2.69435977935791,
+  "joint_grad_norm": 2.714579610011816,
+  "clip_rescale_factor": 1.0,
+  "effective_actor_lr": 0.0003,
+  "reward_std_across_agents": 0.9823009967803955,
+  "reward_std_across_time": 2.0509188175201416,
+  "distinct_advantages_per_step": 25
+ }
+]

@@ -1,0 +1,36 @@
+Exact battery-neutral optimum: EUR 98.74/day | grid-only EUR 175.89/day
+policy                                                      n  EUR/day     IQM          95% CI   worst  recov%  unserv  short  IRraw  IRset P>rule  P>MPC
+---------------------------------------------------------------------------------------------------------------------------------------------------------
+no_flexibility (v1 shield)                                  1   175.89  175.89 [175.89,175.89]  175.89     0.0    0.00   0.00   1.00   1.00   0.00   0.00
+no_flexibility (v2 shield)                                  1   175.89  175.89 [175.89,175.89]  175.89     0.0    0.00   0.00   1.00   1.00   0.00   0.00
+deadline_charging (v1 shield)                               1   208.93  208.93 [208.93,208.93]  208.93   -42.8  103.52   0.00   0.00    nan   0.00   0.00
+deadline_charging (v2 shield)                               1   174.57  174.57 [174.57,174.57]  174.57     1.7    0.00   0.00   0.64   1.00   0.00   0.00
+greedy_self_consumption (v1 shield)                         1   206.99  206.99 [206.99,206.99]  206.99   -40.3    0.00   0.00   0.28    nan   0.00   0.00
+greedy_self_consumption (v2 shield)                         1   206.99  206.99 [206.99,206.99]  206.99   -40.3    0.00   0.00   0.28    nan   0.00   0.00
+tariff_aware_p2p (v1 shield)                                1   153.35  153.35 [153.35,153.35]  153.35    29.2   28.73   0.00   0.96   1.00   0.00   0.00
+tariff_aware_p2p (v2 shield)                                1   143.90  143.90 [143.90,143.90]  143.90    41.5    0.00   0.00   1.00   1.00   0.50   0.00
+MPC, 3-h perfect-forecast window                            1   135.93  135.93 [135.93,135.93]  135.93    51.8    0.00   0.00   1.00    nan   1.00   0.50
+v1 MAPPO, selected on test day                              5   151.27  151.42 [149.23,153.30]  153.91    31.9    0.42   0.00   1.00   1.00   0.00   0.00
+v1 MAPPO, final                                             5   173.43  170.21 [160.40,188.71]  202.22     3.2  111.01   0.00   0.08   1.00   0.00   0.00
+MAPPO-v2 (stable PPO from rule controller), selected        2   147.07  147.07 [145.57,148.56]  148.56    37.4    0.00   0.00   1.00   1.00   0.00   0.00
+MAPPO-v2 (stable PPO from rule controller), final           2   150.90  150.90 [150.64,151.17]  151.17    32.4    0.00   0.00   1.00   1.00   0.00   0.00
+Imitation only (BC on 96 teacher days)                      1   196.73  196.73 [196.73,196.73]  196.73   -27.0    0.00   0.00   0.28    nan   0.00   0.00
+Imitation only, SoC-target actions                          1   368.84  368.84 [368.84,368.84]  368.84  -250.1    0.00   0.00   0.12    nan   0.00   0.00
+Oracle-guided MAPPO student (DAgger), selected              3   116.06  116.06 [115.09,117.91]  117.91    77.6    0.00   0.00   0.96   1.00   1.00   1.00
+Oracle-guided MAPPO student (DAgger), final                 3   116.06  116.06 [115.09,117.91]  117.91    77.6    0.00   0.00   0.96   1.00   1.00   1.00
+Oracle-guided MAT student, laxity order (DAgger), selected  3   113.84  113.84 [111.85,116.20]  116.20    80.4    0.00   0.00   1.00   1.00   1.00   1.00
+Oracle-guided MAT student, laxity order (DAgger), final     3   115.25  115.25 [113.46,117.72]  117.72    78.6    0.00   0.00   0.92   1.00   1.00   1.00
+FINAL: MAT, DAgger + RL fine-tuning, selected on val        3   112.00  112.00 [108.21,114.33]  114.33    82.8    0.00   0.00   1.00   1.00   1.00   1.00
+FINAL: MAT, DAgger + RL fine-tuning, final update           3   111.91  111.91 [110.17,114.33]  114.33    82.9    0.00   0.00   1.00   1.00   1.00   1.00
+MAPPO student + PPO fine-tuning (anchored), selected        1   118.53  118.53 [118.53,118.53]  118.53    74.3    0.00   0.00   1.00   1.00   1.00   1.00
+MAPPO student + PPO fine-tuning (anchored), final           1   117.85  117.85 [117.85,117.85]  117.85    75.2    0.00   0.00   1.00   1.00   1.00   1.00
+MAPPO student + PPO fine-tuning (standard), selected        1   119.25  119.25 [119.25,119.25]  119.25    73.4    0.00   0.00   0.96   1.00   1.00   1.00
+MAPPO student + PPO fine-tuning (standard), final           1   133.46  133.46 [133.46,133.46]  133.46    55.0    0.00   0.00   1.00   1.00   1.00   1.00
+exact optimum (perfect foresight, oracle)                   -    98.74
+
+MAT vs MAPPO oracle-guided students (selected): MAT cheaper by EUR 4.05/day on average; P(MAT seed beats MAPPO seed) = 1.00
+
+Imitation stage (behaviour cloning on teacher days, before DAgger), battery-neutral EUR/day:
+  MAPPO student                seed0= 210.70 seed1= 203.72 seed2= 157.54 | mean  190.65 | P(beats MAPPO student)=0.50 | P(beats random order)=0.00
+  MAT student, laxity order    seed0= 122.95 seed1= 132.35 seed2= 120.78 | mean  125.36 | P(beats MAPPO student)=1.00 | P(beats random order)=0.33
+  MAT student, random order    seed0= 122.08 seed1= 124.71 seed2= 117.88 | mean  121.56 | P(beats MAPPO student)=1.00 | P(beats random order)=0.50

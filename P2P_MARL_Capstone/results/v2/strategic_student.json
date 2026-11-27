@@ -1,0 +1,844 @@
+{
+ "policy": "results/v2/dagger_mat/seed0/iter2.pt",
+ "base_total_eur": 113.30417774655707,
+ "market": {
+  "base_total": 113.30417774655707,
+  "rows": [
+   {
+    "household": 0,
+    "best_gain_raw_eur": 0.17851394967583167,
+    "best_gain_settled_eur": 0.0,
+    "best_raw_deviation": [
+     0.5,
+     1.0,
+     1.2768240102887773
+    ]
+   },
+   {
+    "household": 1,
+    "best_gain_raw_eur": 0.0,
+    "best_gain_settled_eur": 0.03068925822334645,
+    "best_raw_deviation": null
+   },
+   {
+    "household": 2,
+    "best_gain_raw_eur": 0.11220447283434343,
+    "best_gain_settled_eur": 0.04388989175916613,
+    "best_raw_deviation": [
+     0.75,
+     0.5,
+     1.3722624704150093
+    ]
+   },
+   {
+    "household": 3,
+    "best_gain_raw_eur": 0.03179421145855166,
+    "best_gain_settled_eur": 0.02842264214170509,
+    "best_raw_deviation": [
+     1.0,
+     0.5,
+     0.36309716777749657
+    ]
+   },
+   {
+    "household": 4,
+    "best_gain_raw_eur": 0.3657130508404469,
+    "best_gain_settled_eur": 0.0413606387927441,
+    "best_raw_deviation": [
+     0.5,
+     0.5,
+     -1.4428054631970042
+    ]
+   },
+   {
+    "household": 5,
+    "best_gain_raw_eur": 0.5530178854384937,
+    "best_gain_settled_eur": 0.08570291290334886,
+    "best_raw_deviation": [
+     0.75,
+     0.5,
+     -1.7720060776207305
+    ]
+   },
+   {
+    "household": 6,
+    "best_gain_raw_eur": 0.19584418007899806,
+    "best_gain_settled_eur": 0.04420264310551847,
+    "best_raw_deviation": [
+     0.75,
+     0.5,
+     -1.1458027559526585
+    ]
+   },
+   {
+    "household": 7,
+    "best_gain_raw_eur": 0.041635279112919754,
+    "best_gain_settled_eur": 0.05219360546599905,
+    "best_raw_deviation": [
+     1.0,
+     0.5,
+     1.6219989227490004
+    ]
+   },
+   {
+    "household": 8,
+    "best_gain_raw_eur": 0.47576410958409454,
+    "best_gain_settled_eur": 0.011150727152874573,
+    "best_raw_deviation": [
+     0.5,
+     1.0,
+     -0.10798479524989091
+    ]
+   },
+   {
+    "household": 9,
+    "best_gain_raw_eur": 0.0,
+    "best_gain_settled_eur": 0.021438876941979323,
+    "best_raw_deviation": null
+   },
+   {
+    "household": 10,
+    "best_gain_raw_eur": 0.15714493996025425,
+    "best_gain_settled_eur": 0.02801858321534123,
+    "best_raw_deviation": [
+     0.75,
+     0.5,
+     -1.1022917064201607
+    ]
+   },
+   {
+    "household": 11,
+    "best_gain_raw_eur": 0.0,
+    "best_gain_settled_eur": 0.003793342965434654,
+    "best_raw_deviation": null
+   },
+   {
+    "household": 12,
+    "best_gain_raw_eur": 0.046679855651313495,
+    "best_gain_settled_eur": 0.030194361588453233,
+    "best_raw_deviation": [
+     0.25,
+     0.5,
+     -1.1377126100267958
+    ]
+   },
+   {
+    "household": 13,
+    "best_gain_raw_eur": 0.0,
+    "best_gain_settled_eur": 0.014084886526477547,
+    "best_raw_deviation": null
+   },
+   {
+    "household": 14,
+    "best_gain_raw_eur": 0.09757737383129994,
+    "best_gain_settled_eur": 0.022636817489016803,
+    "best_raw_deviation": [
+     0.75,
+     0.5,
+     -0.3303734755417196
+    ]
+   },
+   {
+    "household": 15,
+    "best_gain_raw_eur": 0.5597543618364424,
+    "best_gain_settled_eur": 0.029722697447385205,
+    "best_raw_deviation": [
+     0.5,
+     1.0,
+     2.0054621766543903
+    ]
+   },
+   {
+    "household": 16,
+    "best_gain_raw_eur": 0.0,
+    "best_gain_settled_eur": 0.0,
+    "best_raw_deviation": null
+   },
+   {
+    "household": 17,
+    "best_gain_raw_eur": 0.2778206959937224,
+    "best_gain_settled_eur": 0.12111523687199721,
+    "best_raw_deviation": [
+     1.0,
+     0.5,
+     -0.6785544968578563
+    ]
+   },
+   {
+    "household": 18,
+    "best_gain_raw_eur": 0.1262080728081112,
+    "best_gain_settled_eur": 0.06524017226568013,
+    "best_raw_deviation": [
+     1.0,
+     1.0,
+     -1.048717973207033
+    ]
+   },
+   {
+    "household": 19,
+    "best_gain_raw_eur": 0.0,
+    "best_gain_settled_eur": 0.0,
+    "best_raw_deviation": null
+   },
+   {
+    "household": 20,
+    "best_gain_raw_eur": 0.0012387587385189747,
+    "best_gain_settled_eur": 0.011202139073575701,
+    "best_raw_deviation": [
+     0.75,
+     0.5,
+     -0.2425691702433852
+    ]
+   },
+   {
+    "household": 21,
+    "best_gain_raw_eur": 0.0,
+    "best_gain_settled_eur": 0.03176885011567876,
+    "best_raw_deviation": null
+   },
+   {
+    "household": 22,
+    "best_gain_raw_eur": 0.024219819887396188,
+    "best_gain_settled_eur": 0.03177557886488813,
+    "best_raw_deviation": [
+     1.0,
+     0.5,
+     -1.1554218956122497
+    ]
+   },
+   {
+    "household": 23,
+    "best_gain_raw_eur": 0.8103446901814362,
+    "best_gain_settled_eur": 0.09248883923594953,
+    "best_raw_deviation": [
+     0.25,
+     0.5,
+     -1.1587792147421396
+    ]
+   },
+   {
+    "household": 24,
+    "best_gain_raw_eur": 0.20345010090671867,
+    "best_gain_settled_eur": 0.029123486482877325,
+    "best_raw_deviation": [
+     0.5,
+     0.5,
+     -0.5517624769528311
+    ]
+   }
+  ],
+  "exploitability_raw_eur": 0.8103446901814362,
+  "exploitability_settled_eur": 0.12111523687199721
+ },
+ "misreport": {
+  "rows": [
+   {
+    "household": 0,
+    "load_scale": 0.8,
+    "ev_scale": 1.0,
+    "gain_eur": 0.18560068458988255
+   },
+   {
+    "household": 0,
+    "load_scale": 1.2,
+    "ev_scale": 1.0,
+    "gain_eur": -0.18674883887922977
+   },
+   {
+    "household": 0,
+    "load_scale": 1.0,
+    "ev_scale": 0.8,
+    "gain_eur": 0.36983784025644484
+   },
+   {
+    "household": 0,
+    "load_scale": 1.0,
+    "ev_scale": 1.2,
+    "gain_eur": -0.3744247541142074
+   },
+   {
+    "household": 1,
+    "load_scale": 0.8,
+    "ev_scale": 1.0,
+    "gain_eur": 0.8029337790760991
+   },
+   {
+    "household": 1,
+    "load_scale": 1.2,
+    "ev_scale": 1.0,
+    "gain_eur": -0.8687382541248212
+   },
+   {
+    "household": 1,
+    "load_scale": 1.0,
+    "ev_scale": 0.8,
+    "gain_eur": 0.35756350176525675
+   },
+   {
+    "household": 1,
+    "load_scale": 1.0,
+    "ev_scale": 1.2,
+    "gain_eur": -0.36195617446619366
+   },
+   {
+    "household": 2,
+    "load_scale": 0.8,
+    "ev_scale": 1.0,
+    "gain_eur": 0.17675984463844951
+   },
+   {
+    "household": 2,
+    "load_scale": 1.2,
+    "ev_scale": 1.0,
+    "gain_eur": -0.17780088527365345
+   },
+   {
+    "household": 2,
+    "load_scale": 1.0,
+    "ev_scale": 0.8,
+    "gain_eur": 0.36963759140506314
+   },
+   {
+    "household": 2,
+    "load_scale": 1.0,
+    "ev_scale": 1.2,
+    "gain_eur": -0.3742193832861731
+   },
+   {
+    "household": 3,
+    "load_scale": 0.8,
+    "ev_scale": 1.0,
+    "gain_eur": 0.9446049713025371
+   },
+   {
+    "household": 3,
+    "load_scale": 1.2,
+    "ev_scale": 1.0,
+    "gain_eur": -0.9868029142369563
+   },
+   {
+    "household": 3,
+    "load_scale": 1.0,
+    "ev_scale": 0.8,
+    "gain_eur": 0.4006962460608774
+   },
+   {
+    "household": 3,
+    "load_scale": 1.0,
+    "ev_scale": 1.2,
+    "gain_eur": -0.4062043175042511
+   },
+   {
+    "household": 4,
+    "load_scale": 0.8,
+    "ev_scale": 1.0,
+    "gain_eur": 0.4852568821151526
+   },
+   {
+    "household": 4,
+    "load_scale": 1.2,
+    "ev_scale": 1.0,
+    "gain_eur": -0.4931290945984319
+   },
+   {
+    "household": 4,
+    "load_scale": 1.0,
+    "ev_scale": 0.8,
+    "gain_eur": 0.3501728259228303
+   },
+   {
+    "household": 4,
+    "load_scale": 1.0,
+    "ev_scale": 1.2,
+    "gain_eur": -0.3542538252779259
+   },
+   {
+    "household": 5,
+    "load_scale": 0.8,
+    "ev_scale": 1.0,
+    "gain_eur": 0.8486965675774032
+   },
+   {
+    "household": 5,
+    "load_scale": 1.2,
+    "ev_scale": 1.0,
+    "gain_eur": -0.8842664076115607
+   },
+   {
+    "household": 5,
+    "load_scale": 1.0,
+    "ev_scale": 0.8,
+    "gain_eur": 0.385226950870031
+   },
+   {
+    "household": 5,
+    "load_scale": 1.0,
+    "ev_scale": 1.2,
+    "gain_eur": -0.39027570444676485
+   },
+   {
+    "household": 6,
+    "load_scale": 0.8,
+    "ev_scale": 1.0,
+    "gain_eur": 0.6826210195557927
+   },
+   {
+    "household": 6,
+    "load_scale": 1.2,
+    "ev_scale": 1.0,
+    "gain_eur": -0.6966459018070834
+   },
+   {
+    "household": 6,
+    "load_scale": 1.0,
+    "ev_scale": 0.8,
+    "gain_eur": 0.371339952211871
+   },
+   {
+    "household": 6,
+    "load_scale": 1.0,
+    "ev_scale": 1.2,
+    "gain_eur": -0.37596143174708097
+   },
+   {
+    "household": 7,
+    "load_scale": 0.8,
+    "ev_scale": 1.0,
+    "gain_eur": 0.2784683862034645
+   },
+   {
+    "household": 7,
+    "load_scale": 1.2,
+    "ev_scale": 1.0,
+    "gain_eur": -0.28104304253904466
+   },
+   {
+    "household": 7,
+    "load_scale": 1.0,
+    "ev_scale": 0.8,
+    "gain_eur": 0.34926803365560666
+   },
+   {
+    "household": 7,
+    "load_scale": 1.0,
+    "ev_scale": 1.2,
+    "gain_eur": -0.35332789540890097
+   },
+   {
+    "household": 8,
+    "load_scale": 0.8,
+    "ev_scale": 1.0,
+    "gain_eur": 0.2387337842661048
+   },
+   {
+    "household": 8,
+    "load_scale": 1.2,
+    "ev_scale": 1.0,
+    "gain_eur": -0.24061882021837278
+   },
+   {
+    "household": 8,
+    "load_scale": 1.0,
+    "ev_scale": 0.8,
+    "gain_eur": 0.34479380299698104
+   },
+   {
+    "household": 8,
+    "load_scale": 1.0,
+    "ev_scale": 1.2,
+    "gain_eur": -0.3487395075442179
+   },
+   {
+    "household": 9,
+    "load_scale": 0.8,
+    "ev_scale": 1.0,
+    "gain_eur": 0.08996455497722611
+   },
+   {
+    "household": 9,
+    "load_scale": 1.2,
+    "ev_scale": 1.0,
+    "gain_eur": -0.0902311307257353
+   },
+   {
+    "household": 9,
+    "load_scale": 1.0,
+    "ev_scale": 0.8,
+    "gain_eur": 0.3704536973430348
+   },
+   {
+    "household": 9,
+    "load_scale": 1.0,
+    "ev_scale": 1.2,
+    "gain_eur": -0.3750155465018121
+   },
+   {
+    "household": 10,
+    "load_scale": 0.8,
+    "ev_scale": 1.0,
+    "gain_eur": 0.2898027601535622
+   },
+   {
+    "household": 10,
+    "load_scale": 1.2,
+    "ev_scale": 1.0,
+    "gain_eur": -0.292583158006813
+   },
+   {
+    "household": 10,
+    "load_scale": 1.0,
+    "ev_scale": 0.8,
+    "gain_eur": 0.31556633261693934
+   },
+   {
+    "household": 10,
+    "load_scale": 1.0,
+    "ev_scale": 1.2,
+    "gain_eur": -0.31886589364953144
+   },
+   {
+    "household": 11,
+    "load_scale": 0.8,
+    "ev_scale": 1.0,
+    "gain_eur": 0.24698582708257932
+   },
+   {
+    "household": 11,
+    "load_scale": 1.2,
+    "ev_scale": 1.0,
+    "gain_eur": -0.24901352958953193
+   },
+   {
+    "household": 11,
+    "load_scale": 1.0,
+    "ev_scale": 0.8,
+    "gain_eur": 0.3663925738484597
+   },
+   {
+    "household": 11,
+    "load_scale": 1.0,
+    "ev_scale": 1.2,
+    "gain_eur": -0.37087255003460884
+   },
+   {
+    "household": 12,
+    "load_scale": 0.8,
+    "ev_scale": 1.0,
+    "gain_eur": 0.2853574370904335
+   },
+   {
+    "household": 12,
+    "load_scale": 1.2,
+    "ev_scale": 1.0,
+    "gain_eur": -0.2880559319349265
+   },
+   {
+    "household": 12,
+    "load_scale": 1.0,
+    "ev_scale": 0.8,
+    "gain_eur": 0.39817266497408266
+   },
+   {
+    "household": 12,
+    "load_scale": 1.0,
+    "ev_scale": 1.2,
+    "gain_eur": -0.40344631827818134
+   },
+   {
+    "household": 13,
+    "load_scale": 0.8,
+    "ev_scale": 1.0,
+    "gain_eur": 0.14655742784276526
+   },
+   {
+    "household": 13,
+    "load_scale": 1.2,
+    "ev_scale": 1.0,
+    "gain_eur": -0.147267017988713
+   },
+   {
+    "household": 13,
+    "load_scale": 1.0,
+    "ev_scale": 0.8,
+    "gain_eur": 0.33711689699670533
+   },
+   {
+    "household": 13,
+    "load_scale": 1.0,
+    "ev_scale": 1.2,
+    "gain_eur": -0.3408950571110818
+   },
+   {
+    "household": 14,
+    "load_scale": 0.8,
+    "ev_scale": 1.0,
+    "gain_eur": 0.28414693133492097
+   },
+   {
+    "household": 14,
+    "load_scale": 1.2,
+    "ev_scale": 1.0,
+    "gain_eur": -0.2868331267084465
+   },
+   {
+    "household": 14,
+    "load_scale": 1.0,
+    "ev_scale": 0.8,
+    "gain_eur": 0.3350272695018348
+   },
+   {
+    "household": 14,
+    "load_scale": 1.0,
+    "ev_scale": 1.2,
+    "gain_eur": -0.33876790334622386
+   },
+   {
+    "household": 15,
+    "load_scale": 0.8,
+    "ev_scale": 1.0,
+    "gain_eur": 0.08482882125847091
+   },
+   {
+    "household": 15,
+    "load_scale": 1.2,
+    "ev_scale": 1.0,
+    "gain_eur": -0.08506496691449206
+   },
+   {
+    "household": 15,
+    "load_scale": 1.0,
+    "ev_scale": 0.8,
+    "gain_eur": 0.44328475273076373
+   },
+   {
+    "household": 15,
+    "load_scale": 1.0,
+    "ev_scale": 1.2,
+    "gain_eur": -0.4498095276988381
+   },
+   {
+    "household": 16,
+    "load_scale": 0.8,
+    "ev_scale": 1.0,
+    "gain_eur": 0.32814765467451634
+   },
+   {
+    "household": 16,
+    "load_scale": 1.2,
+    "ev_scale": 1.0,
+    "gain_eur": -0.33173817191024746
+   },
+   {
+    "household": 16,
+    "load_scale": 1.0,
+    "ev_scale": 0.8,
+    "gain_eur": 0.3743437606846447
+   },
+   {
+    "household": 16,
+    "load_scale": 1.0,
+    "ev_scale": 1.2,
+    "gain_eur": -0.37902353437952296
+   },
+   {
+    "household": 17,
+    "load_scale": 0.8,
+    "ev_scale": 1.0,
+    "gain_eur": 0.808772803682424
+   },
+   {
+    "household": 17,
+    "load_scale": 1.2,
+    "ev_scale": 1.0,
+    "gain_eur": -0.8191636002972
+   },
+   {
+    "household": 17,
+    "load_scale": 1.0,
+    "ev_scale": 0.8,
+    "gain_eur": 0.34086095920668935
+   },
+   {
+    "household": 17,
+    "load_scale": 1.0,
+    "ev_scale": 1.2,
+    "gain_eur": -0.34486107494535645
+   },
+   {
+    "household": 18,
+    "load_scale": 0.8,
+    "ev_scale": 1.0,
+    "gain_eur": 0.26561175521437974
+   },
+   {
+    "household": 18,
+    "load_scale": 1.2,
+    "ev_scale": 1.0,
+    "gain_eur": -0.26795114049615876
+   },
+   {
+    "household": 18,
+    "load_scale": 1.0,
+    "ev_scale": 0.8,
+    "gain_eur": 0.3444301452425953
+   },
+   {
+    "household": 18,
+    "load_scale": 1.0,
+    "ev_scale": 1.2,
+    "gain_eur": -0.34837422459872336
+   },
+   {
+    "household": 19,
+    "load_scale": 0.8,
+    "ev_scale": 1.0,
+    "gain_eur": 1.1294969031989108
+   },
+   {
+    "household": 19,
+    "load_scale": 1.2,
+    "ev_scale": 1.0,
+    "gain_eur": -1.201499013421456
+   },
+   {
+    "household": 19,
+    "load_scale": 1.0,
+    "ev_scale": 0.8,
+    "gain_eur": 0.31632938862076543
+   },
+   {
+    "household": 19,
+    "load_scale": 1.0,
+    "ev_scale": 1.2,
+    "gain_eur": -0.32000379583764094
+   },
+   {
+    "household": 20,
+    "load_scale": 0.8,
+    "ev_scale": 1.0,
+    "gain_eur": 0.9451627755143353
+   },
+   {
+    "household": 20,
+    "load_scale": 1.2,
+    "ev_scale": 1.0,
+    "gain_eur": -0.9693489799015635
+   },
+   {
+    "household": 20,
+    "load_scale": 1.0,
+    "ev_scale": 0.8,
+    "gain_eur": 0.35597564843750895
+   },
+   {
+    "household": 20,
+    "load_scale": 1.0,
+    "ev_scale": 1.2,
+    "gain_eur": -0.36027256957526976
+   },
+   {
+    "household": 21,
+    "load_scale": 0.8,
+    "ev_scale": 1.0,
+    "gain_eur": 0.6540216603387208
+   },
+   {
+    "household": 21,
+    "load_scale": 1.2,
+    "ev_scale": 1.0,
+    "gain_eur": -0.6662564191619413
+   },
+   {
+    "household": 21,
+    "load_scale": 1.0,
+    "ev_scale": 0.8,
+    "gain_eur": 0.34846930987360203
+   },
+   {
+    "household": 21,
+    "load_scale": 1.0,
+    "ev_scale": 1.2,
+    "gain_eur": -0.35256734680116075
+   },
+   {
+    "household": 22,
+    "load_scale": 0.8,
+    "ev_scale": 1.0,
+    "gain_eur": 0.3013736161988554
+   },
+   {
+    "household": 22,
+    "load_scale": 1.2,
+    "ev_scale": 1.0,
+    "gain_eur": -0.3043881371598207
+   },
+   {
+    "household": 22,
+    "load_scale": 1.0,
+    "ev_scale": 0.8,
+    "gain_eur": 0.3701768722137655
+   },
+   {
+    "household": 22,
+    "load_scale": 1.0,
+    "ev_scale": 1.2,
+    "gain_eur": -0.3747353124863779
+   },
+   {
+    "household": 23,
+    "load_scale": 0.8,
+    "ev_scale": 1.0,
+    "gain_eur": 0.8042124330541593
+   },
+   {
+    "household": 23,
+    "load_scale": 1.2,
+    "ev_scale": 1.0,
+    "gain_eur": -0.8215037262500164
+   },
+   {
+    "household": 23,
+    "load_scale": 1.0,
+    "ev_scale": 0.8,
+    "gain_eur": 0.43103848181237936
+   },
+   {
+    "household": 23,
+    "load_scale": 1.0,
+    "ev_scale": 1.2,
+    "gain_eur": -0.4373830020763396
+   },
+   {
+    "household": 24,
+    "load_scale": 0.8,
+    "ev_scale": 1.0,
+    "gain_eur": 1.0932863889646063
+   },
+   {
+    "household": 24,
+    "load_scale": 1.2,
+    "ev_scale": 1.0,
+    "gain_eur": -1.1473606374685428
+   },
+   {
+    "household": 24,
+    "load_scale": 1.0,
+    "ev_scale": 0.8,
+    "gain_eur": 0.35830382514876113
+   },
+   {
+    "household": 24,
+    "load_scale": 1.0,
+    "ev_scale": 1.2,
+    "gain_eur": -0.3626881892445173
+   }
+  ],
+  "max_gain_eur": 1.1294969031989108,
+  "argmax": {
+   "household": 19,
+   "load_scale": 0.8,
+   "ev_scale": 1.0,
+   "gain_eur": 1.1294969031989108
+  }
+ }
+}
